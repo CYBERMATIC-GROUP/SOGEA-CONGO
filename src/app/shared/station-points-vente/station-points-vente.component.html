@@ -1,0 +1,200 @@
+<div class="container-fluid">
+    
+      <div class="row px-0">
+        <div class="col-lg-6 px-0">
+          <div class="d-flex align-items-center w-100">
+            <i
+              style="position: absolute"
+              class="fa-solid fa-search p-3 text-success"
+            ></i>
+            <input
+              type="text"
+              (keyup)="applyFilter($event)"
+              placeholder="Recherchez par ici..."
+              class="form-control shadow text-start px-5 text-uppercase w-100"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6 px-0" >
+          <button
+            class="form-control shadow col-lg-4 bg-primary text-white"
+            style="cursor: pointer;float: right;"
+            (click)="create()"
+            disabled
+          >
+            Ajouter un point de Point 
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 mt-4 px-0" >
+          <select
+          class="form-select"
+          aria-label="Default select example"
+          (change)="onSelectionChange($event)"
+        >
+          <option value="0">Tous les departements</option>
+          <option disabled>Filtrer par departements</option>
+          <option
+            *ngFor="let departement of DepartementList"
+            [value]="departement.IDDEPARTEMENT"
+          >
+            {{ departement.NomDepartement }}
+          </option>
+        </select>
+        </div>
+        <div class="col-lg-3 mt-4">
+          <select
+          class="form-select"
+          aria-label="Default select example"
+          (change)="onSelectionChanges($event)"
+        >
+          <option value="0">Tous les Arrondissements</option>
+          <option disabled>Filtrer par Arrondissement</option>
+          <option
+            *ngFor="let arrondissement of ArrondissementtList"
+            [value]="arrondissement.IDARRONDISSEMENT"
+          >
+            {{ arrondissement.NomArron }}
+          </option>
+        </select>
+        </div>
+
+        <div class="col-lg-3 mt-4" >
+          <select
+          class="form-select"
+          aria-label="Default select example"
+          (change)="onSelectionChangequartier($event)"
+        >
+          <option value="0">Tous les quartiers</option>
+          <option disabled>Filtrer par quartier</option>
+          <option
+            *ngFor="let quartier of QuartierList"
+            [value]="quartier.IDQUARTIER"
+          >
+            {{ quartier.NomQuartier }}
+          </option>
+        </select>
+        </div>
+
+        <div class="col-lg-3 mt-4" *ngIf="!IDStation" >
+          <select
+          class="form-select"
+          aria-label="Default select example"
+          (change)="onSelectionChangeStation($event)"
+        >
+          <option value="0">Toutes les stations</option>
+          <option disabled>Filtrer par station</option>
+          <option
+            *ngFor="let station of StationList"
+            [value]="station.IDSTATIONS"
+          >
+            {{ station.NomStation }}
+          </option>
+        </select>
+        </div>
+
+      </div>
+
+      <div class="row px-0">
+        <div class="mat-elevation-z8 w-100 px-0">
+            <table mat-table [dataSource]="dataSource" class="table-striped px-0" *ngIf="!isLoading; else loader">
+              <ng-container matColumnDef="RaisonSocilale">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                    Raison Socilale
+                </th>
+                <td
+                  class="pointer"
+                  (click)="openGenre(element)"
+                  mat-cell
+                  *matCellDef="let element"
+                >
+                  {{ element.RaisonSocilale }}
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="Adresse">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                    Adresse
+                </th>
+                <td
+                  class="pointer"
+                  (click)="openGenre(element)"
+                  mat-cell
+                  *matCellDef="let element"
+                >
+                  {{ element.Adresse }}
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="Mobile">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                    Mobile
+                </th>
+                <td
+                  class="pointer"
+                  (click)="openGenre(element)"
+                  mat-cell
+                  *matCellDef="let element"
+                >
+                  {{ element.Mobile }}
+                </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="Actions">
+                <th
+                  mat-header-cell
+                  class="text-end"
+                  style="padding-right: 65px"
+                  *matHeaderCellDef
+                >
+                  Actions
+                </th>
+        
+                <td
+                  mat-cell
+                  class="text-end"
+                  style="padding-right: 50px"
+                  *matCellDef="let element"
+                >
+                  <button
+                    type="button"
+                    (click)="view(element)"
+                    class="btn text-lowercase py-0 px-1"
+                  >
+                    <i class="fa fa-eye text-black" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="edit(element)"
+                    class="btn text-lowercase py-0 px-1"
+                  >
+                    <i class="fa fa-pencil text-black" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="delete(element)"
+                    class="btn text-lowercase px-1 py-0"
+                  >
+                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator
+            [pageSizeOptions]="[20, 40, 60]"
+            showFirstLastButtons
+            aria-label="Select page of periodic elements"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    
+      <ng-template #loader>
+        <app-loader></app-loader>
+      </ng-template>
+    </div>

@@ -1,0 +1,95 @@
+<div class="container">
+  <li class="nav-item" style="list-style: none;">
+    <a class="nav-link text-primary " style="cursor: pointer;" (click)="_location.back()"><i class="fa-solid fa-arrow-left"></i> Retour </a>
+  </li>
+  <h1 class="card-title text-center">Liste des departements</h1>
+  <div class="d-flex justify-content-start flex-wrap align-items-center">
+    <div class="mb-3 col-8 col-md-8 col-lg-6">
+      <div class="d-flex align-items-center">
+        <i style="position: absolute" class="fas fas-magnify p-3"></i>
+        <input
+          type="text"
+          (keyup)="applyFilter($event)"
+          placeholder="Recherchez par ici..."
+          class="form-control shadow text-start px-5 text-uppercase"
+        />
+      </div>
+    </div>
+    <div class="mb-3 col-4 col-md-8 col-lg-6">
+      <button class="btn btn-primary" (click)="openAddDepartementModal()">
+        Ajouter <i class="fa fa-add"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" *ngIf="!isLoading; else loader">
+      <!-- Position Column -->
+      <ng-container matColumnDef="CodeDepartement">
+        <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+          Code Departement
+        </th>
+        <td
+          mat-cell
+          class="pointer"
+          (click)="openEditDepartement(element)"
+          *matCellDef="let element; let i = index"
+          [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+        >
+          {{ element.CodeDepartement }}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="NomDepartement">
+        <th mat-header-cell *matHeaderCellDef>Nom departement</th>
+        <td
+          mat-cell
+          class="pointer"
+          (click)="openEditDepartement(element)"
+          *matCellDef="let element"
+        >
+          {{ element.NomDepartement }}
+        </td>
+      </ng-container>
+
+      <!-- actions -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td
+          mat-cell
+          class="pointer"
+          (click)="delete(element)"
+          *matCellDef="let element"
+        >
+          <button class="mx-2 btn" title="Supprimer">
+            <i class="fa fa-times text-danger"></i>
+          </button>
+
+          <!-- <button class="mx-2 btn" title="Modifier" (click)="openEditDepartement(element)">
+            <i class="fa fa-edit text-primary"></i>
+          </button> -->
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+    [pageSizeOptions]="[20, 40, 60]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+  </div>
+
+  <ng-template #loader>
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <br />
+      <span>Chargement...</span>
+    </div>
+  </ng-template>
+</div>

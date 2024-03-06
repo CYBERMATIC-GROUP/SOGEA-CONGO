@@ -1,0 +1,95 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col mb-2 px-0">
+          <div class="col-lg-4">
+              <div class="d-flex align-items-center">
+                  <i
+                    style="position: absolute"
+                    class="fa-solid fa-search p-3 text-success"
+                  ></i>
+                  <input
+                  type="text"
+                  (keyup)="applyFilter($event)"
+                  placeholder="Recherchez par ici..."
+                  class="form-control shadow text-start px-5 text-uppercase"
+                  />
+              </div>
+          </div>
+          <div class="col-lg-8" *ngIf="sessionAgent">
+            <div class=" col-md-6 ">
+              <div class="h-100 d-flex justify-content-start align-items-end">
+                <button class="form-control" mat-raised-button color="primary"  *ngIf="sessionAgent.bDroitAjouterAotomobile == true"  (click)="openFilter()">Recherche avancée</button>
+              </div>
+            </div>
+            <div class=" col-md-6 d-flex align-items-end">
+              <section class=" w-100">
+                <div class="example-button-row ">
+                  <button  mat-raised-button routerLink="nouveau"  *ngIf="sessionAgent.bDroitAjouterAotomobile == true"  class="form-control" color="accent">Ajouter</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col px-0">
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" *ngIf="!isLoading; else loader">
+        
+            <!-- Position Column -->
+            <ng-container matColumnDef="Nom">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Nom </th>
+              <td mat-cell *matCellDef="let element" class="pointer" [ngClass]="{selected: element == elementSelected }" (click)="selectLine(element)">
+                  {{ element.nom }}
+               </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Immatriculation">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Immatriculation </th>
+              <td mat-cell *matCellDef="let element" class="pointer" [ngClass]="{selected: element == elementSelected }" (click)="selectLine(element)">
+                  {{ element.Immatriculation }}
+               </td>
+            </ng-container>
+        
+            <!-- Nom Column -->
+            <ng-container matColumnDef="TypeAutomobile">
+              <th mat-header-cell *matHeaderCellDef> Model </th>
+              <td mat-cell *matCellDef="let element" class="pointer" [ngClass]="{selected: element == elementSelected }" (click)="selectLine(element)"> {{element.TypeAutomobile}} </td>
+            </ng-container>
+      
+            <!-- Adresse Column -->
+            <ng-container matColumnDef="MarqueAutomobile">
+              <th mat-header-cell *matHeaderCellDef> Marque </th>
+              <td mat-cell *matCellDef="let element" class="pointer" [ngClass]="{selected: element == elementSelected }" (click)="selectLine(element)"> {{element.MarqueAutomobile}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Genre">
+                <th mat-header-cell *matHeaderCellDef> Genre </th>
+                <td mat-cell *matCellDef="let element" class="pointer" [ngClass]="{selected: element == elementSelected }" (click)="selectLine(element)"> {{element.Genre}} </td>
+            </ng-container>
+      
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator  [pageSizeOptions]="[20, 5, 10]"
+              showFirstLastButtons
+              aria-label="Select page of periodic elements"
+            >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #loader>
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+        </div><br>
+        <span>Chargement...</span>
+    </div>
+  </ng-template>
+    

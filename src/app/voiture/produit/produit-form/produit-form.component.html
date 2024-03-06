@@ -1,0 +1,363 @@
+
+<div class="container-fluid">
+  <li
+  class="nav-item bg-primary text-left"
+  *ngIf="action != 'view'"
+  style="list-style: none"
+>
+  <a
+    class="nav-link text-white"
+    (click)="dialog.closeAll()"
+    style="cursor: pointer; padding-left: 10px"
+    ><i class="fa-solid fa-arrow-left"></i> Annuler
+  </a>
+</li>
+<div class="row">
+  <div class="m-auto" style="width: 80em; height: 80vh">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-left">
+          <h2 class="text-">
+            {{ action === "view" ? "Fiche du produit " : "" }}
+            {{ action === "edit" ? "Modifier le produit" : "" }}
+            {{ action === "view" || action === "edit" ? LibelleProduit : "" }}
+            {{ !action ? "creer un nouveau produit" : "" }}
+          </h2>
+        </h3>
+        <form
+          #produitForm="ngForm"
+          (ngSubmit)="onSubmitForm(produitForm)"
+          class="col-12 mt-4 g-3 needs-validation"
+          *ngIf="!isLoading; else loading"
+        >
+          <div class="row">
+            <div class="col-12">
+               <span>Produit</span>
+               <hr/>
+            </div>
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Code produit
+              </label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control text-uppercase"
+                name="Reference"
+                [(ngModel)]="Reference"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Type Produit</label
+              >
+
+              <input
+                readonly
+                type="text"
+                class="form-control hauteur hauteur"
+                name="IDTypeProduit"
+                [(ngModel)]="IDTypeProduit"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Libelle Produit</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur text-capitalize "
+                name="LibelleProduit"
+                [(ngModel)]="LibelleProduit"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Montant</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="PrixVente"
+                [(ngModel)]="PrixVente"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Validité
+              </label>
+              <input
+                [readonly]="action == 'view'"
+                type="number"
+                class="form-control hauteur hauteur"
+                name="Validite"
+                [(ngModel)]="Validite"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Taux Taxe
+              </label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="TauxTaxe"
+                [(ngModel)]="TauxTaxe"
+                required=""
+              />
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-12">
+              <span>Véhicule et Compte</span>
+              <hr/>
+           </div>
+
+           <div class="col-lg-4 mb-1">
+
+            <label for="" class="">Categorie</label>
+            <div class="d-flex align-items-center">
+              <select
+                [disabled]="action == 'view'"
+                type="text"
+                class="form-control hauteur form-select"
+                name="IDCategorie"
+                [(ngModel)]="IDCategorie"
+                aria-label=".form-select-sm example"
+              >
+              <option disabled selected>selectionner une categorie</option>
+              <option
+                *ngFor="let categorie of categorieList"
+                [value]="categorie.IDCategories"
+              >
+                {{ categorie.Categorie_Vehicule }}
+              </option>
+              </select>
+            </div>
+
+           </div>
+
+          <div class="col-lg-4 mb-1">
+            <label for="validationCustom01" class="form-label"
+              >Type Automobile</label
+            >
+
+            <div class="d-flex align-items-center">
+              <select
+                [disabled]="action == 'view'"
+                type="text"
+                class="form-control hauteur form-select"
+                [(ngModel)]="IDTypeAutomobile"
+                name="IDTypeAutomobile"
+                aria-label=".form-select-sm example"
+              >
+                <option disabled selected>selectionner un type automobile</option>
+                <option
+                  *ngFor="let typeautomobile of typeAutomobileList"
+                  [value]="typeautomobile.IDTypeAutomobile"
+                >
+                  {{ typeautomobile.NomType }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label">Genre</label>
+
+              <div class="d-flex align-items-center">
+                <select
+                  [disabled]="action == 'view'"
+                  type="text"
+                  class="form-control hauteur form-select"
+                  [(ngModel)]="IDGenre"
+                  name="IDGenre"
+                  aria-label=".form-select-sm example"
+                >
+                  <option disabled selected>Selectionner un genre vehicule</option>
+                  <option *ngFor="let genre of genreList" [value]="genre.IDGenre">
+                    {{ genre.GenreVoiture }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-12 mb-1">
+              <label for="validationCustom01" class="form-label">COMPTE</label>
+              <div class="input-group ">
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Type automobile"
+                  (input)="onInputCompte($event)"
+                  placeholder="Proprietaire"
+                  [readonly]="action == 'view'"
+                  [matAutocomplete]="proprioElt"
+                />
+                <span
+                  class="input-group-text fa-solid fa-plus-square bg-success text-light pointer"
+                  title="Ajouter un nouveau compte"
+                  (click)="addCompte()"
+                >
+                </span>
+              </div>
+              <mat-autocomplete #proprioElt>
+                <mat-option
+                  *ngFor="let compte of suggestCompteList"
+                  [value]="compte.LibelleCompte"
+                  (click)="selectCompte(compte)"
+                  >{{ compte.LibelleCompte + " " + compte.PersonneAssociee }}</mat-option
+                >
+              </mat-autocomplete>
+
+            </div>
+          </div>
+
+          <div class="row mb-1 mt-5">
+            <div class="col-12">
+              <span>Détails produit</span>
+              <hr/>
+           </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Total HT</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="TotalHT"
+                [(ngModel)]="TotalHT"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Responsabilité Civile
+              </label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Responsabilite_Civile"
+                [(ngModel)]="Responsabilite_Civile"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Indice Chauffeur</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="IND_CHAUF"
+                [(ngModel)]="IND_CHAUF"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >GESTION POOL
+              </label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="GESTION_POOL"
+                [(ngModel)]="GESTION_POOL"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label">Police</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Police"
+                [(ngModel)]="Police"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Timbre Carte Rose</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="TimbreCarteRose"
+                [(ngModel)]="TimbreCarteRose"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-6 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Commission Courtier par Jour</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Commiss_Courtier_Jou"
+                [(ngModel)]="Commiss_Courtier_Jou"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-6 mb-1">
+              <label for="validationCustom01" class="form-label"
+                >Taux Interet Annuel</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="TauxInteretAnnuel"
+                [(ngModel)]="TauxInteretAnnuel"
+                required=""
+              />
+            </div>
+          </div>
+
+
+
+          <div class="mt-4 col-12" *ngIf="action != 'view'">
+            <button type="submit" class="btn form-control btn-primary">
+              {{ action === "edit" ? "Modifier le produit " : "Valider" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  <ng-template #loading>
+    <app-loader></app-loader>
+  </ng-template>
+</div>
+

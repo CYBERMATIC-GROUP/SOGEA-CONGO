@@ -1,0 +1,552 @@
+<div class="container-fluid bg-light">
+  <div>
+    <div class="">
+      <h3 class="mb-5 text-center">Amortissement</h3>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="">
+                <div class="col-12">
+                  <label for="" class="text-center" style="color: rgb(128, 120, 120)"
+                    >Selectionner la date</label
+                  >
+                  <input
+                    type="date"
+                    [(ngModel)]="DateEcheance"
+                    (change)="onDateSelected()"
+                    name="DateEcheance"
+                    required=""
+                    class="form-control"
+                  />
+                </div>
+      
+                <div class="col-12 mb-4">
+                  <button mat-raised-button class="w-100" (click)="onSelectCar()">
+                    Cliquer pour Sélectionner un véhicule
+                  </button>
+                </div>
+              </div>
+              <div class="row g-2 border">
+                <div class="col-12">
+                  <h4 class="d-flex align-items-center justify-content-center">
+                    Assuré
+                  </h4>
+                </div>
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Nom</div>
+                    <div class="col-8">
+                      : {{ autoSelected ? autoSelected.P_Nom : "" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Prénoms</div>
+                    <div class="col-8">
+                      : {{ autoSelected ? autoSelected.P_Prenom : "" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Fonction</div>
+                    <div class="col-8">: Transporteur</div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Adresse</div>
+                    <div class="col-8">: 102 rue mandzanmo</div>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <span class="input-group-text rounded-0" id="basic-addon1">Versement  '</span>
+                <input type="number" [(ngModel)]="versement" class="form-control rounded-0" placeholder="Montant ici" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group">
+                <span class="input-group-text rounded-0" id="basic-addon1">Revenue net</span>
+                <input type="text" [(ngModel)]="revenu_net" class="form-control rounded-0" placeholder="Montant ici" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+            </div>
+            <div class="col-md-6 py-4">
+              <div class="row g-2 h-100 border">
+                <div class="col-12">
+                  <h4 class="d-flex align-items-center justify-content-center">
+                    Véhicule
+                  </h4>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Immatriculation</div>
+                    <div class="col-8">
+                      : {{ autoSelected ? autoSelected.Immatriculation : "" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Type</div>
+                    <div class="col-8">
+                      : {{ autoSelected ? autoSelected.TypeAutomobile : "" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Marque</div>
+                    <div class="col-8">
+                      : {{ autoSelected ? autoSelected.MarqueAutomobile : "" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Genre</div>
+                    <div class="col-8">
+                      : {{ autoSelected ? autoSelected.Genre : "" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Source d'énergie</div>
+                    <div class="col-8">
+                      : {{ autoSelected ? autoSelected.SourceEnergie : "" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Année de première mise en service</div>
+                    <div class="col-8">
+                      :
+                      {{
+                        autoSelected
+                          ? autoSelected.AnneeConstruction
+                          : ("" | date)
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>        
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4" *ngIf="amortissementDetails$ | async as amortissement; else tableEmpty">
+        <div class="col-md-3 custom-table">
+          <div
+            class="details"
+            
+          >
+            <label>Caractéristiques de votre prêt</label>
+            <table class="tables">
+              <tr>
+                <td>Montant du prêt</td>
+                <td>
+                  {{
+                    globalService.formatPrix(
+                      amortissement.XECHEANCIER_ANNUEL[0].MontantDuPret,
+                      " ",
+                      "XAF"
+                    )
+                  }}
+                </td>
+              </tr>
+              <tr></tr>
+
+              <tr>
+                <td>Taux d'intérêt</td>
+                <td>
+                  {{
+                    globalService.formatPrix(
+                      amortissement.ParametreGeneral.TauxInteretAnnuel,
+                      "",
+                      "%"
+                    )
+                  }}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Coût du prêt</td>
+                <td>
+                  {{
+                    globalService.formatPrix(
+                      amortissement.XECHEANCIER_ANNUEL[0]
+                        .MontantInteretsCumules,
+                      " ",
+                      "XAF"
+                    )
+                  }}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Montant total</td>
+                <td>
+                  {{
+                    globalService.formatPrix(
+                      amortissement.XECHEANCIER_ANNUEL[0].CapitalPlusInteret,
+                      " ",
+                      "XAF"
+                    )
+                  }}
+                </td>
+              </tr>
+            </table>
+
+            <tfoot>
+              <div class="row text-bold">
+                <div class="col-12">Revenu mensuel Net : </div>
+                <div class="col-12">QCM : </div>
+              </div>
+            </tfoot>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div
+            class="details"
+            
+          >
+            <label></label>
+            <table class="tables">
+              <tr>
+                <td>Mensualité</td>
+                <td>
+                  {{
+                    globalService.formatPrix(
+                      amortissement.XECHEANCIER_MENSUEL[0].Mensualites,
+                      " ",
+                      "XAF"
+                    )
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>Nombre de mensualités prévues</td>
+                <td>
+                  {{
+                    amortissement
+                      ? amortissement.XECHEANCIER_ANNUEL[0].NbreMensualiteParAn
+                      : 0
+                  }}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Prélévement Capital remboursé + Intérêts/Jours</td>
+                <td>
+                  {{ amortissement.ParametreGeneral.DateDebutEcheance | date }}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Commissions Courtier-Gestionnaire/Jour</td>
+                <td>
+                  {{ amortissement.ParametreGeneral.DateDebutEcheance | date }}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Montant des intérêts</td>
+                <td>
+                  {{ amortissement.ParametreGeneral.DateDebutEcheance | date }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-md-3 custom-table">
+          <div
+            class="details"
+            
+          >
+            <label>Synthèse des prélèvements journaliers</label>
+            <table class="tables">
+              <tr>
+                <td>Capital remboursé + Intérêts :</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Commissions Courtier :</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Autres</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>Total prélèvements journaliers :</td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #tableEmpty> 
+        <div class="row mt-4">
+          <div class="col-md-3 custom-table">
+            <div
+              class="details"
+              
+            >
+              <label>Caractéristiques de votre prêt</label>
+              <table class="tables">
+                <tr>
+                  <td>Montant du prêt</td>
+                  <td>
+                  </td>
+                </tr>
+                <tr></tr>
+  
+                <tr>
+                  <td>Taux d'intérêt</td>
+                  <td>
+                  </td>
+                </tr>
+  
+                <tr>
+                  <td>Coût du prêt</td>
+                  <td>
+                  </td>
+                </tr>
+  
+                <tr>
+                  <td>Montant total</td>
+                  <td>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div>
+              <button mat-raised-button color="accent" class=" col-md-5 mx-2" [disabled]="!dataSource"  (click)="valideContrat()">Valider</button>
+            </div>
+          </div>
+  
+          <div class="col-md-6">
+            <div
+              class="details"
+              
+            >
+              <label></label>
+              <table class="tables">
+                <tr>
+                  <td>Mensualité</td>
+                  <td>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Nombre de mensualités prévues</td>
+                  <td>
+                  </td>
+                </tr>
+  
+                <tr>
+                  <td>Prélévement Capital remboursé + Intérêts/Jours</td>
+                  <td>
+                  </td>
+                </tr>
+  
+                <tr>
+                  <td>Commissions Courtier-Gestionnaire/Jour</td>
+                  <td>
+                  </td>
+                </tr>
+  
+                <tr>
+                  <td>Montant des intérêts</td>
+                  <td>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+  
+          <div class="col-md-3 custom-table">
+            <div
+              class="details"
+              
+            >
+              <label>Synthèse des prélèvements journaliers</label>
+              <table class="tables">
+                <tr>
+                  <td>Capital remboursé + Intérêts :</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Commissions Courtier :</td>
+                  <td></td>
+                </tr>
+  
+                <tr>
+                  <td>Autres</td>
+                  <td></td>
+                </tr>
+  
+                <tr>
+                  <td>Total prélèvements journaliers :</td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <div>
+        <div class="mat-elevation-z8 table-striped mt-4 table">
+          <h4 class="text-center py-1">Tableau d'amortissement</h4>
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            class="table-striped"
+            *ngIf="!isLoading; else loader"
+          >
+            <!-- Position Column -->
+            <ng-container matColumnDef="NumeroEcheance">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                N॰
+              </th>
+              <td class="pointer" mat-cell 
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ element.NumeroEcheance }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="DateEcheance">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                Date écheance
+              </th>
+              <td class="pointer" mat-cell 
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ element.DateEcheance | date }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="SoldeInitial">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                Solde initial
+              </th>
+              <td class="pointer" mat-cell 
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ globalService.formatPrix(element.SoldeInitial, " ") }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Mensualites">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                Mensualités
+              </th>
+              <td class="pointer" mat-cell 
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ globalService.formatPrix(element.Mensualites) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="MontantInteretsMensuel">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                Interet
+              </th>
+              <td class="pointer" mat-cell
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ globalService.formatPrix(element.MontantInteretsMensuel) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="MontantCapitalMensuel">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                Capital
+              </th>
+              <td class="pointer" mat-cell 
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ globalService.formatPrix(element.MontantCapitalMensuel) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ResteDu">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                Reste
+              </th>
+              <td class="pointer" mat-cell 
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ globalService.formatPrix(element.ResteDu) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="MontantInteretsCumules">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+                Interret cumulé
+              </th>
+              <td class="pointer" mat-cell 
+                *matCellDef="let element; let i = index"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              >
+                {{ globalService.formatPrix(element.MontantInteretsCumules) }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+
+          <mat-paginator
+            [pageSizeOptions]="[20, 40, 60]"
+            showFirstLastButtons
+            aria-label="Select page of periodic elements"
+          >
+          </mat-paginator>
+        </div>
+
+
+        <ng-template #loader>
+          <div class="text-center">
+            <br />
+            <span>Chargement en cours ...</span>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row">
+          <button mat-raised-button color="primary" class=" col-md-4" (click)="imprimer()">Imprimer</button>
+          <button mat-raised-button color="accent" class=" col-md-4" [disabled]="!dataSource"  (click)="valideContrat()">Enregistrer le contrat</button>
+          <button mat-raised-button color="primary" class=" col-md-4" routerLink="/liste-souscription">Liste des souscriptions</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

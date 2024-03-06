@@ -1,0 +1,10 @@
+<app-dashboard titlePage="Mes véhicules">
+    <div *ngIf="(automobilesForProprio$ | async) as automobiles; else loader">
+        <app-automobile [automobilesPassed]="automobiles"></app-automobile>
+    </div>
+
+    <ng-template #loader>
+        <app-loader></app-loader>
+    </ng-template>
+    
+</app-dashboard>

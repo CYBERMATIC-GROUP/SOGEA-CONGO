@@ -1,0 +1,74 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+$primary-color: #789aa7;
+
+.text-color-primar{
+    color: $primary-color;
+}
+
+.bg-color-primary{
+    background: $primary-color;
+}
+
+.border-color-primary{
+    border-color: $primary-color;
+}
+
+.pointer{
+    cursor: pointer;
+}
+.nav-item{
+    list-style: none;
+}
+.mdc-tab__text-label {
+    color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.mat-mdc-tab-body-content {
+    height: 100%;
+    overflow: hidden !important;
+}
+
+.btn-close{
+    color: red;
+}
+.table-striped tr:nth-child(even) {
+    background-color: #7888fc;
+  }
+
+  .toast-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+    background-color: white;
+}
+
+element.style {
+    width: 42em;
+    background-color: white;
+}
+
+h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+  }
+
+.pointer{
+    cursor: pointer;
+}
+
+.bg-primary{
+    background: red;
+}

@@ -1,0 +1,40 @@
+<app-dashboard>
+  <div class="container bg-white shadow">
+    <h1 class="my-2"> </h1>
+    <div class="row">
+      <div class="col-md-6 bg-light border">
+        <a
+          routerLink="/amortissement"
+          class="text-center text-black text-decoration-none"
+        >
+          <p class="fs-6 pt-2">Nouveau contrat</p>
+          <p><i class="fa-sharp fa-solid fa-file-signature text-primary text-decoration-none fs-1"></i></p>
+        </a>
+      </div>
+      <div class="col-md-6 bg-light border">
+        <a routerLink="/liste-souscription" class="text-center text-black text-decoration-none">
+          <p class="fs-6 pt-2">Liste des Souscriptions</p>
+          <p><i class="fa-sharp fa-solid fa-file-lines text-dark fs-1"></i></p>
+        </a>
+      </div>
+      <div class="col-md-6 bg-light border">
+        <a  class="text-center text-black text-decoration-none pointer" (click)="globalService.onDevelop()">
+          <p class="fs-6 pt-2">Statistiques</p>
+          <p><i class="fa-sharp fa-solid fa-chart-pie text-warning fs-1 "></i></p>
+        </a>
+      </div>
+      <div class="col-md-6 bg-light border">
+        <a (click)="globalService.onDevelop()" class="pointer text-center text-black text-decoration-none">
+          <p class="fs-6 pt-2">Suivi clients</p>
+          <p><i class="fa-sharp fa-solid fa-people-arrows fs-1 text-primary "></i></p>
+        </a>
+      </div>
+      <div class="col-md-6 bg-light border">
+        <a routerLink="/impression/viniette" class="text-center text-black text-decoration-none pointer">
+          <p class="fs-6 pt-2">Imprimer viniette</p>
+          <p><i class="fa-sharp fa-solid fa-print text-black fs-1"></i></p>
+        </a>
+      </div>
+    </div>
+  </div>
+</app-dashboard>

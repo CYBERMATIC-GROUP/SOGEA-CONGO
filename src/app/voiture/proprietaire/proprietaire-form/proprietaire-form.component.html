@@ -1,0 +1,239 @@
+<li class="nav-item bg-primary"  *ngIf="action != 'view'" style="list-style: none;">
+  <a class="nav-link text-white p-2 " style="cursor: pointer;width: 100px;" (click)="_location.back()"><i class="fa-solid fa-arrow-left"></i> Retour </a>
+</li>
+<div class="row">
+  <div class="">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-left" style="width: 30em">
+          <h2 class="text-left">
+            {{ action === "view" ? "Fiche de l'assuré " : "" }}
+            {{ action === "edit" ? "Modifier l'assuré" : "" }}
+            {{ action === "view" || action === "edit" ? Nom : "" }}
+            {{ !action ? "Fiche de l'assuré" : "" }}
+          </h2>
+        </h3>
+        <form
+          #genreForm="ngForm"
+          (ngSubmit)="onSubmitForm(genreForm)"
+          class="g-3 mt-4 needs-validation"
+        >
+          <div class="row mt-3">
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label">Nom</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Nom"
+                [(ngModel)]="Nom"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label">Prenom</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Prenom"
+                [(ngModel)]="Prenom"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Mot De Passe</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="MotDePasse"
+                [(ngModel)]="MotDePasse"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Civilite</label
+              >
+              <select class="form-select form-control"  name="Civilite"
+              [(ngModel)]="Civilite" aria-label="Default select example">
+                <option value="1">Homme</option>
+                <option value="2">Femme</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+           
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Adresse mail</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="eMail"
+                [(ngModel)]="eMail"
+                required=""
+              />
+            </div>
+
+
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Teléphone Fixe</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="TelFixe"
+                [(ngModel)]="TelFixe"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Teléphone Portable</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="TelPortable"
+                [(ngModel)]="TelPortable"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Date d'enregistrement  </label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="date"
+                class="form-control hauteur hauteur"
+                name="DateCreation"
+                [(ngModel)]="DateCreation"
+                required=""
+              />
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-lg-4">
+              <label for="validationCustom01" class="form-label"
+                >DEPARTEMENT</label
+              >
+
+              <select
+                class="form-select"
+                name="IDDEPARTEMENT"
+                [(ngModel)]="IDDEPARTEMENT"
+                (change)="onSelectionChange($event)"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner un departement</option>
+                <option
+                  *ngFor="let departement of DepartementList"
+                  [value]="departement.IDDEPARTEMENT"
+                >
+                  {{ departement.NomDepartement }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-4">
+              <label for="validationCustom01" class="form-label"
+                >ARRONDISSEMENT</label
+              >
+
+              <select
+                class="form-select"
+                name="IDARRONDISSEMENT"
+                [(ngModel)]="IDARRONDISSEMENT"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner un arrondissement</option>
+                <option
+                  *ngFor="let arrondissement of ArrondissementList"
+                  [value]="arrondissement.IDARRONDISSEMENT"
+                >
+                  {{ arrondissement.NomArron }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-4">
+              <label for="validationCustom01" class="form-label"
+                >QUARTIER</label
+              >
+
+              <select
+                class="form-select"
+                name="IDQUARTIER"
+                [(ngModel)]="IDQUARTIER"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner un quartier</option>
+                <option
+                  *ngFor="let quartier of QuartierList"
+                  [value]="quartier.IDQUARTIER"
+                >
+                  {{ quartier.NomQuartier }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-lg-6">
+              <label for="validationCustom01" class="form-label">NIU</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="NIU"
+                [(ngModel)]="NIU"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-6">
+              <label for="validationCustom01" class="form-label">Adresse</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Adresse"
+                [(ngModel)]="Adresse"
+                required=""
+              />
+            </div>
+          </div>
+
+          <div class="mt-3 m-auto" *ngIf="action != 'view'">
+            <button type="submit" class="btn form-control btn-primary">
+              {{ action === "edit" ? "Modifier l'assuré " : "Valider" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="fa-3x text-start mb-2 mt-2">
+    <span class="fs-5 mb-2 mt-2"></span> <br /><br />
+    <i class="fas text-primary spinner-grow"></i><br />
+  </div>
+</ng-template>

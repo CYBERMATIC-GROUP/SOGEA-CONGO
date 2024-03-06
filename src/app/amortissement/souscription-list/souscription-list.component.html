@@ -1,0 +1,122 @@
+
+<div class="container-fluid">
+    <div class="row"> 
+        <h1 class="card-title text-center" *ngIf="!souscriptionListPassed"> {{ !openForViniette ? 'Liste des souscriptions' : 'Sélectionnez les souscriptions à imprimer ' }} </h1>
+        <div class="row mb-2">
+          <div class=" col-12 col-lg-4 px-0">
+              <div class="d-flex align-items-center p-0">
+                  <i
+                  style="position: absolute"
+                  class="fa-solid fa-loop p-3 text-success"
+                  ></i>
+                  <input
+                    type="text"
+                    (keyup)="applyFilter($event)"
+                    placeholder="Recherchez par ici..."
+                    class="form-control shadow text-start px-5 pl-0 text-uppercase"
+                  />
+              </div>
+          </div>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col p-0 rounded">
+        <div class="mat-elevation-z8 rounded">
+          <table mat-table [dataSource]="dataSource" *ngIf="!isLoading; else loader" class="rounded border-secondary overflow-hidden">
+        
+            <!-- Position Column -->
+            <ng-container matColumnDef="Immatriculation">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Immatriculation </th>
+              <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}" (click)="selectLine(element)">
+                  {{ element.Immatriculation }}
+               </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Proprietaire">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Propriétaire </th>
+              <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}" (click)="selectLine(element)">
+                  {{ element.Proprietaire }}
+               </td>
+            </ng-container>  
+
+            <ng-container matColumnDef="CapitalInteret">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Montant TTC </th>
+              <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}" (click)="selectLine(element)">
+                  {{ globalService.formatPrix(element.CapitalInteret, " ", " XAF") }}
+               </td>
+            </ng-container>
+
+            <ng-container matColumnDef="DejaPaye">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Payé </th>
+              <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}" (click)="selectLine(element)">
+                  {{ globalService.formatPrix(element.CapitalInteret - element.Reste_Du) }}
+               </td>
+            </ng-container> 
+
+            <ng-container matColumnDef="Reste_du">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Reste </th>
+              <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}" (click)="selectLine(element)">
+                  {{ globalService.formatPrix(element.Reste_Du) }}
+               </td>
+            </ng-container> 
+
+            <ng-container matColumnDef="DateFin">
+              <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Date fin </th>
+              <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}" (click)="selectLine(element)">
+                  {{ element.DateFin | date }}
+               </td>
+            </ng-container>
+  
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator  [pageSizeOptions]="[20, 5, 10]"
+              showFirstLastButtons
+              aria-label="Select page of periodic elements"
+            >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+
+    <div class="row px-3 mt-4" *ngIf="openForViniette">
+      <h1 class="card-title text-center my-5 mb-2">Viniettes à imprimer en fonction des souscriptions sélectionnées</h1>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr class="">
+            <th scope="col">Immatriculation</th>
+            <th scope="col">Propriétaire</th>
+            <th scope="col">Montant TTC</th>
+            <th scope="col">Reste</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="selectedSouscription && selectedSouscription.length > 0">
+          <tr *ngFor="let item of selectedSouscription">
+            <td>{{ item.Immatriculation}}</td>
+            <td>{{ item.Proprietaire }}</td>
+            <td>{{ globalService.formatPrix(item.CapitalInteret, " ") }}</td>
+            <td>{{ globalService.formatPrix(item.Reste_Du) }}</td>
+            <td><i (click)="removeSouscriptionFormLis(item)" class="fa fa-trash text-danger pointer" title="Retirer" aria-hidden="true"></i></td>
+          </tr>
+
+        </tbody>
+      </table>
+      <button mat-raised-button color="primary" (click)="printViniette()" [disabled]="selectedSouscription.length < 1" class=" col-12 ">Lancer l'impression de(s) viniette(s)</button>
+    </div>
+  </div>
+  
+  <ng-template #loader>
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+        </div><br>
+        <span>Chargement...</span>
+    </div>
+  </ng-template>
+    

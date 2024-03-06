@@ -1,0 +1,599 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header text-start">
+      <li class="nav-item">
+        <a class="nav-link" style="cursor: pointer" (click)="_location.back()"
+          ><i class="fa-solid fa-arrow-left"></i> Retour
+        </a>
+      </li>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">
+                <h2>
+                  {{ action === "view" ? "Fiche automobile" : "" }}
+                  {{ action === "edit" ? "Edition automibile " : "" }}
+                  <!--{{ action === "view" || action === "edit" ? LibelleProduit : "" }}-->
+                  {{ !action ? " Ajout d'un automobile" : "" }}
+                </h2>
+              </h3>
+              <form
+                [formGroup]="autoForm"
+                class="row g-3 needs-validation"
+                *ngIf="
+                  suggestGenreList &&
+                    departements &&
+                    suggestMarqueAutoList &&
+                    suggestProprietaireList &&
+                    suggestSourceEnergie &&
+                    suggestTypeAutoMobile &&
+                    suggestSocieteList;
+                  else loading
+                "
+              >
+                <div class="img-fiche col-md-4">
+                  <img
+                    src="./assets/images/car.jpeg"
+                    class="float-left"
+                    width="100%"
+                    alt="img-voiture"
+                  />
+                </div>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="validationCustom02" class="form-label"
+                        >Immatriculation*</label
+                      >
+                      <input
+                        [readonly]="action == 'view'"
+                        type="text"
+                        class="form-control hauteur text-uppercase"
+                        formControlName="Immatriculation"
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for="validationCustom01" class="form-label"
+                        >Numero serie*</label
+                      >
+                      <input
+                        [readonly]="action == 'view'"
+                        formControlName="NumeroSerie"
+                        type="text"
+                        class="form-control hauteur hauteur text-uppercase"
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for="validationCustom01" class="form-label"
+                        >Identifiant carte*</label
+                      >
+                      <input
+                        [readonly]="action == 'view'"
+                        formControlName="IdentifiantCarte"
+                        type="text"
+                        class="form-control hauteur hauteur text-uppercase"
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <label
+                        for="validationCustom02"
+                        *ngIf="autoForm.controls['AnneeConstruction'].valid"
+                        class="form-label"
+                        >Année de mise en service*</label
+                      >
+                      <label
+                        for="validationCustom02"
+                        *ngIf="autoForm.controls['AnneeConstruction'].invalid"
+                        class="form-label text-danger"
+                        >Année de mise en service invalide*</label
+                      >
+                      <input
+                        [readonly]="action == 'view'"
+                        type="number"
+                        class="form-control hauteur"
+                        min="1900"
+                        max="2099"
+                        formControlName="AnneeConstruction"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label"
+                    >Marque*</label
+                  >
+
+                  <!--div class="d-flex align-items-center">
+                    <i
+                      style="position: absolute"
+                      *ngIf="
+                        suggestMarqueAutoList &&
+                        suggestMarqueAutoList.length < 1
+                      "
+                      title="Ajouter ce type automibile"
+                      (click)="addMarque()"
+                      class="pointer fa-solid fa-plus-square text-success px-2 fs-3"
+                    ></i>
+                    <input
+                      type="text"
+                      [ngClass]="{ 'px-5': suggestMarqueAutoList.length < 1 }"
+                      [readonly]="action == 'view'"
+                      class="form-control hauteur text-uppercase"
+                      formControlName="Marque"
+                      (blur)="onBlurMarqueAuto($event)"
+                      (input)="onInputMarqueAuto($event)"
+                      placeholder="Marque automobile"
+                      [matAutocomplete]="marque"
+                    />
+                    <mat-autocomplete #marque>
+                      <mat-option
+                        *ngFor="let marque of suggestMarqueAutoList"
+                        [value]="marque.Marque"
+                        >{{ marque.Marque }}</mat-option
+                      >
+                    </mat-autocomplete>
+                  </div-->
+
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Type automobile"
+                      formControlName="Marque"
+                      (blur)="onBlurMarqueAuto($event)"
+                      (input)="onInputMarqueAuto($event)"
+                      placeholder="Marque automobile"
+                      [matAutocomplete]="marque"
+                    />
+                    <span
+                      class="input-group-text fa-solid fa-plus-square bg-success text-light pointer"
+                      title="Ajouter ce type automibile"
+                      (click)="addMarque()"
+                    >
+                    </span>
+                  </div>
+                  <mat-autocomplete #marque>
+                    <mat-option
+                      *ngFor="let marque of suggestMarqueAutoList"
+                      [value]="marque.Marque"
+                      >{{ marque.Marque }}</mat-option
+                    >
+                  </mat-autocomplete>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label"
+                    >Type automobile*</label
+                  >
+
+                  <!--div class="d-flex align-items-center">
+                    <i
+                      style="position: absolute"
+                      *ngIf="suggestTypeAutoMobile.length < 1"
+                      title="Ajouter ce type automibile"
+                      (click)="addType()"
+                      class="pointer fa-solid fa-plus-square text-success px-2 fs-3"
+                    ></i>
+
+                    <input
+                      type="text"
+                      [ngClass]="{ 'px-5': suggestTypeAutoMobile.length < 1 }"
+                      class="form-control shadow text-start"
+                      formControlName="TypeAutomobile"
+                      (blur)="onBlurTypeAuto($event)"
+                      (input)="onInputTypeAuto($event)"
+                      placeholder="Type automobile"
+                      [matAutocomplete]="typeAuto"
+                      [readonly]="action == 'view'"
+                    />
+                    <mat-autocomplete #typeAuto>
+                      <mat-option
+                        *ngFor="let type of suggestTypeAutoMobile"
+                        [value]="type.NomType"
+                        >{{ type.NomType }}</mat-option
+                      >
+                    </mat-autocomplete>
+                  </div-->
+
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="TypeAutomobile"
+                      aria-label="Type automobile"
+                      (blur)="onBlurTypeAuto($event)"
+                      (input)="onInputTypeAuto($event)"
+                      placeholder="Type automobile"
+                      [matAutocomplete]="typeAuto"
+                      [readonly]="action == 'view'"
+                    />
+                    <span
+                      class="input-group-text fa-solid fa-plus-square bg-success text-light pointer"
+                      title="Ajouter ce type automibile"
+                      (click)="addType()"
+                    >
+                    </span>
+                  </div>
+                  <mat-autocomplete #typeAuto>
+                    <mat-option
+                      *ngFor="let type of suggestTypeAutoMobile"
+                      [value]="type.NomType"
+                      >{{ type.NomType }}</mat-option
+                    >
+                  </mat-autocomplete>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="" class="">Source energies*</label>
+                  <div class="d-flex align-items-center">
+                    <select
+                      [disabled]="action == 'view'"
+                      type="text"
+                      class="form-control hauteur"
+                      formControlName="IDSourceEnergie"
+                      aria-label=".form-select-sm example"
+                    >
+                      <option disabled selected>Energie</option>
+                      <option
+                        [value]="m.IDSourceEnergie"
+                        *ngFor="let m of suggestSourceEnergie"
+                      >
+                        {{ m.SourceEnergie }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label mb-0"
+                    >Genre*</label
+                  >
+
+                  <!--div class="d-flex align-items-center">
+                    <i
+                      style="position: absolute"
+                      *ngIf="suggestGenreList.length < 1"
+                      title="Ajouter ce type automibile"
+                      (click)="addGenre()"
+                      class="pointer fa-solid fa-plus-square text-success px-2 fs-3"
+                    ></i>
+                    <input
+                      type="text"
+                      [ngClass]="{ 'px-5': suggestGenreList.length < 1 }"
+                      [readonly]="action == 'view'"
+                      class="form-control hauteur text-uppercase"
+                      formControlName="Genre"
+                      (blur)="onBlurGenre($event)"
+                      (input)="onInputGenre($event)"
+                      placeholder="Genre véhicule"
+                      [matAutocomplete]="genre"
+                    />
+                    <mat-autocomplete #genre>
+                      <mat-option
+                        *ngFor="let genre of suggestGenreList"
+                        [value]="genre.GenreVoiture"
+                        >{{ genre.GenreVoiture }}</mat-option
+                      >
+                    </mat-autocomplete>
+                  </div-->
+
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Type automobile"
+                      formControlName="Genre"
+                      (blur)="onBlurGenre($event)"
+                      (input)="onInputGenre($event)"
+                      placeholder="Genre véhicule"
+                      [matAutocomplete]="genre"
+                    />
+                    <span
+                      class="input-group-text fa-solid fa-plus-square bg-success text-light pointer"
+                      title="Ajouter ce type automibile"
+                      (click)="addMarque()"
+                    >
+                    </span>
+                  </div>
+                  <mat-autocomplete #genre>
+                    <mat-option
+                      *ngFor="let genre of suggestGenreList"
+                      [value]="genre.GenreVoiture"
+                      >{{ genre.GenreVoiture }}</mat-option
+                    >
+                  </mat-autocomplete>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label mb-0"
+                    >Proprietaire
+                  </label>
+                  <!--div class="d-flex align-items-center">
+                    <i
+                      style="position: absolute"
+                      *ngIf="suggestProprietaireList.length < 1"
+                      title="Ajouter ce type automibile"
+                      (click)="addProprio()"
+                      class="pointer fa-solid fa-plus-square text-success px-2 fs-3"
+                    ></i>
+
+                    <input
+                      type="text"
+                      [ngClass]="{ 'px-5': suggestProprietaireList.length < 1 }"
+                      [readonly]="action == 'view'"
+                      class="form-control hauteur text-uppercase"
+                      formControlName="Proprietaire"
+                      (blur)="onBlurProprietaire($event)"
+                      (input)="onInputProprietaire($event)"
+                      placeholder="Proprietaire"
+                      [matAutocomplete]="proprioElt"
+                    />
+                    <mat-autocomplete #proprioElt>
+                      <mat-option
+                        *ngFor="let proprio of suggestProprietaireList"
+                        [value]="proprio.Nom + ' ' + proprio.Prenom"
+                        >{{ proprio.Nom + " " + proprio.Prenom }}</mat-option
+                      >
+                    </mat-autocomplete>
+                  </div-->
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Type automobile"
+                      formControlName="Proprietaire"
+                      (blur)="onBlurProprietaire($event)"
+                      (input)="onInputProprietaire($event)"
+                      placeholder="Proprietaire"
+                      [readonly]="action == 'view'"
+                      [matAutocomplete]="proprioElt"
+                    />
+                    <span
+                      class="input-group-text fa-solid fa-plus-square bg-success text-light pointer"
+                      title="Ajouter ce type automibile"
+                      (click)="addMarque()"
+                    >
+                    </span>
+                  </div>
+                  <mat-autocomplete #proprioElt>
+                    <mat-option
+                      *ngFor="let proprio of suggestProprietaireList"
+                      [value]="proprio.Nom + ' ' + proprio.Prenom"
+                      (click)="onSelectProprietaire(proprio)"
+                      >{{ proprio.Nom + " " + proprio.Prenom }}</mat-option
+                    >
+                  </mat-autocomplete>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="" class="">Categorie</label>
+                  <div class="d-flex align-items-center">
+                    <select
+                      [disabled]="action == 'view'"
+                      type="text"
+                      class="form-control hauteur"
+                      formControlName="IDCategorie"
+                      aria-label=".form-select-sm example"
+                    >
+                      <option disabled selected>category</option>
+                      <option
+                        [value]="c.IDCategories"
+                        *ngFor="let c of categoryList"
+                      >
+                        {{ c.Categorie_Vehicule }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label
+                    for="validationCustom02"
+                    *ngIf="autoForm.controls['lesSocietesName'].invalid"
+                    class="form-label text-danger mb-0"
+                    >Aucune société avec ce nom trouvée
+                  </label>
+                  <label
+                    for="validationCustom02"
+                    *ngIf="autoForm.controls['lesSocietesName'].valid"
+                    class="form-label mb-0"
+                    >Société
+                  </label>
+
+                  <div class="d-flex align-items-center mt-0">
+                    <i
+                      style="position: absolute"
+                      *ngIf="suggestSocieteList.length < 1"
+                      title="Ajouter cette cociété"
+                      (click)="addLesSocietes()"
+                      class="pointer fa-solid fa-plus-square text-success px-2 fs-3"
+                    ></i>
+                    <input
+                      type="text"
+                      [readonly]="action == 'view'"
+                      [ngClass]="{ 'px-5': suggestSocieteList.length < 1 }"
+                      class="form-control hauteur text-uppercase"
+                      formControlName="lesSocietesName"
+                      (blur)="onBlurLesSocietes($event)"
+                      (input)="onInputSociete($event)"
+                      placeholder="Société"
+                      [matAutocomplete]="societe"
+                    />
+                    <mat-autocomplete #societe>
+                      <mat-option
+                        *ngFor="let societe of suggestSocieteList"
+                        [value]="societe.NomSociete"
+                        >{{ societe.NomSociete }}</mat-option
+                      >
+                    </mat-autocomplete>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="" class="">Departement*</label>
+                  <div class="d-flex align-items-center">
+                    <select
+                      [disabled]="action == 'view'"
+                      type="text"
+                      class="form-control hauteur"
+                      formControlName="IDDEPARTEMENT"
+                      aria-label=".form-select-sm example"
+                    >
+                      <option disabled selected>Departement</option>
+                      <option
+                        [value]="m.IDDEPARTEMENT"
+                        *ngFor="let m of departements"
+                      >
+                        {{ m.NomDepartement }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label"
+                    >Nom*</label
+                  >
+                  <input
+                    [readonly]="action == 'view'"
+                    (focus)="onFocusNom()"
+                    type="text"
+                    class="form-control hauteur text-uppercase"
+                    formControlName="nom"
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label
+                    for="validationCustom02"
+                    class="form-label text-uppercase"
+                    >Couleur</label
+                  >
+                  <input
+                    [readonly]="action == 'view'"
+                    type="text"
+                    class="form-control hauteur"
+                    formControlName="Couleur"
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label"
+                    >Puissance moteur</label
+                  >
+                  <input
+                    [readonly]="action == 'view'"
+                    type="text"
+                    class="form-control hauteur text-uppercase"
+                    formControlName="PuissanceMoteur"
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label"
+                    >Date delivrance</label
+                  >
+                  <input
+                    [readonly]="action == 'view'"
+                    type="date"
+                    class="form-control hauteur text-uppercase"
+                    formControlName="DateDelivrance"
+                  />
+                </div>
+
+                <div class="col-md-4 h-100">
+                  <label for="validationCustom02" class="form-label"
+                    >Est-un taxi moto ? </label
+                  ><br />
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="bTaxiMoto"
+                    value=""
+                    aria-label="..."
+                  />
+                </div>
+
+                <div class="card-footer">
+                  <div class="col-12 px-2" *ngIf="action != 'view'">
+                    <button
+                      type="submit"
+                      mat-raised-button
+                      class="w-100 m-auto text-dark border"
+                      (click)="submitAutomobile()"
+                      color="accent"
+                      *ngIf="autoForm.valid"
+                    >
+                      Valider
+                    </button>
+                    <button
+                      type="submit"
+                      mat-raised-button
+                      class="w-100 px-2 py-5 m-auto text-danger border"
+                      color="accent"
+                      disabled
+                      *ngIf="autoForm.invalid"
+                    >
+                      Formulaire encore invalide <br />
+                      <span class=""
+                        >Remplisser les champs obligatoires(*)</span
+                      >
+                    </button>
+                  </div>
+
+                  <div class="mt-3 m-auto text-center" *ngIf="action == 'view'">
+                    <section class="text-xl-center">
+                      <div class="example-label">Actions</div>
+                      <div class="example-button-row">
+                        <button
+                          mat-raised-button
+                          color="primary"
+                          (click)="edit()"
+                        >
+                          Modifier
+                        </button>
+                        <button
+                          mat-raised-button
+                          color="accent"
+                          routerLink="/voiture/automobile/nouveau"
+                          class="mx-2"
+                        >
+                          Ajouter
+                        </button>
+                        <button
+                          mat-raised-button
+                          color="warn"
+                          (click)="delete()"
+                        >
+                          Supprimer
+                        </button>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #loading>
+        <div
+          class="w-100 h-100 d-flex justify-content-center align-items-center"
+        >
+          <div class="fa-3x text-center">
+            <span class="fs-5 mb-1 mt-2">Chargement...</span> <br /><br />
+            <i class="fas text-primary spinner-grow"></i><br />
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+
+<div
+class="d-flex position-absolute start-50 shadow top-50 bg-light translate-middle "
+style="width: 30em;"
+>
+
+<div class="w-100" style="border-radius: 20px;">
+  <div class="" style="border-radius: 0px">
+    <div class="card" style="border-radius: 0px">
+      <div class="card-body">
+        <div class="authent-logo">
+          <img src="../../assets/images/sogea.jpg" alt="" />
+        </div>
+        <div class="authent-text">
+          <p class="text-center">Bienvenue !</p>
+          <p class="text-center">Espace de connexion Station-service</p>
+        </div>
+
+        <form [formGroup]="loginForm">
+          <div class="mb-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                id="sLogin"
+                formControlName="identifiant"
+                required="ce champ ne doit pas etre vide"
+                class="form-control text-uppercase"
+                placeholder="000000000"
+              />
+              <label for="Login">Login de connexion</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="form-floating d-flex align-items-center">
+              <input
+                [type]="typePswd"
+                id="sPasseWord"
+                formControlName="password"
+                required="ce champ ne doit pas etre vide"
+                class="form-control"
+                placeholder="mot de passe"
+              />
+              <label for="password">Mot de Passe</label>
+              <a
+                style="cursor: pointer"
+                class="text-black"
+              >
+                <i
+                  style="
+                    position: relative;
+                    margin-left: -40px;
+                    font-size: 17px;
+                  "
+                  *ngIf="typePswd === 'text'"
+                  (click)="togglePasswordVisibility()"
+                  class="fa-sharp fa-solid fa-eye pt-2"
+                ></i>
+                <i
+                  style="
+                    position: relative;
+                    margin-left: -40px;
+                    font-size: 17px;
+                  "
+                  *ngIf="typePswd === 'password'"
+                  (click)="togglePasswordVisibility()"
+                  class="fa-solid fa-eye-slash pt-2"
+                ></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="d-grid">
+            <button
+              *ngIf="!isLoading; else loading"
+              type="submit"
+              (click)="submitLogin()"
+              class="btn btn-primary text-white"
+              [disabled]="loginForm.invalid"
+            >
+              Connectez-vous !
+            </button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<ng-template #loading>
+    <app-loader></app-loader>
+</ng-template>
+

@@ -1,0 +1,282 @@
+<div class="row">
+ 
+  <div class="border" style="width: 70em !important">
+    
+    <div class="card">
+      <li class="nav-item bg-primary text-left" style="list-style: none">
+        <a
+          class="nav-link text-white"
+          (click)="dialog.closeAll()"
+          style="cursor: pointer; padding-left: 10px;"
+          ><i class="fa-solid fa-arrow-left"></i> Annuler
+        </a>
+      </li>
+      <div class="card-body">
+        <h3 class="card-title text-left">
+          <h2 class="text-left">
+            {{ action === "view" ? "Fiche Station Point Vente " : "" }}
+            {{ action === "edit" ? "Modifier la  station point vente" : "" }}
+            {{ action === "view" || action === "edit" ? IDVENDEURS : "" }}
+            {{ !action ? "Fiche Station Point Vente" : "" }}
+          </h2>
+        </h3>
+        <form
+          #stationPointVentteForm="ngForm"
+          (ngSubmit)="onSubmitForm(stationPointVentteForm)"
+          class="g-3 needs-validation"
+        >
+          <div class="row mt-3">
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Raison Socilale</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="RaisonSocilale"
+                [(ngModel)]="RaisonSocilale"
+                required=""
+              />
+            </div>
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Adresse
+              </label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Adresse"
+                [(ngModel)]="Adresse"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label">Mobile</label>
+              <input
+                [readonly]="action == 'view'"
+                type="number"
+                class="form-control hauteur hauteur"
+                name="Mobile"
+                [(ngModel)]="Mobile"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Airtel Money</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="number"
+                class="form-control hauteur hauteur"
+                name="AirtelMoney"
+                [(ngModel)]="AirtelMoney"
+                required=""
+              />
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label">MOMO</label>
+              <input
+                [readonly]="action == 'view'"
+                type="number"
+                class="form-control hauteur hauteur"
+                name="MOMO"
+                [(ngModel)]="MOMO"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label">code station</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="IdentifiantVendeur"
+                [(ngModel)]="IdentifiantVendeur"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Nom et Prenom Responsable</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="NomPrenomResponsable"
+                [(ngModel)]="NomPrenomResponsable"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Date d'enregistrement</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="date"
+                class="form-control hauteur hauteur"
+                name="DateCreation"
+                [(ngModel)]="DateCreation"
+                required=""
+              />
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-lg-4">
+              <label for="validationCustom01" class="form-label"
+                >DEPARTEMENT</label
+              >
+
+              <select
+                class="form-select"
+                name="IDDEPARTEMENT"
+                [(ngModel)]="IDDEPARTEMENT"
+                (change)="onSelectionChange($event)"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner un departement</option>
+                <option
+                  *ngFor="let departement of DepartementList"
+                  [value]="departement.IDDEPARTEMENT"
+                >
+                  {{ departement.NomDepartement }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-4">
+              <label for="validationCustom01" class="form-label"
+                >ARRONDISSEMENT</label
+              >
+
+              <select
+                class="form-select"
+                name="IDARRONDISSEMENT"
+                [(ngModel)]="IDARRONDISSEMENT"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner un arrondissement</option>
+                <option
+                  *ngFor="let arrondissement of ArrondissementList"
+                  [value]="arrondissement.IDARRONDISSEMENT"
+                >
+                  {{ arrondissement.NomArron }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-4">
+              <label for="validationCustom01" class="form-label"
+                >QUARTIER</label
+              >
+
+              <select
+                class="form-select"
+                name="IDQUARTIER"
+                [(ngModel)]="IDQUARTIER"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner un quartier</option>
+                <option
+                  *ngFor="let quartier of QuartierList"
+                  [value]="quartier.IDQUARTIER"
+                >
+                  {{ quartier.NomQuartier }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >STATIONS</label
+              >
+
+              <select
+              class="form-select"
+              name="IDSTATIONS"
+              [(ngModel)]="IDSTATIONS"
+              aria-label="Default select example"
+            >
+              <option disabled>selectionner une statioon</option>
+              <option
+                *ngFor="let station of StationList"
+                [value]="station.IDSTATIONS"
+              >
+                {{ station.NomStation }}
+              </option>
+            </select>
+
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Latitude</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="GPS_Latitude"
+                [(ngModel)]="GPS_Latitude"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Compagnie</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="Compagnie"
+                [(ngModel)]="Compagnie"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-3">
+              <label for="validationCustom01" class="form-label"
+                >Longitude</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="GPS_Longitude"
+                [(ngModel)]="GPS_Longitude"
+                required=""
+              />
+            </div>
+          </div>
+
+          <div class="mt-5 m-auto" *ngIf="action != 'view'">
+            <button type="submit" class="btn form-control btn-primary">
+              {{ action === "edit" ? "Modifier le point de vente station " : "Valider" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="fa-3x text-start mb-2 mt-2">
+    <span class="fs-5 mb-2 mt-2"></span> <br /><br />
+    <i class="fas text-primary spinner-grow"></i><br />
+  </div>
+</ng-template>

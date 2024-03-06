@@ -1,0 +1,10 @@
+<app-dashboard titlePage="Mes souscriptions">
+    <div *ngIf="(souscriptionsList$ | async) as souscriptionList; else loader">
+        <app-souscription-list [souscriptionListPassed]="souscriptionList"></app-souscription-list>
+    </div>
+
+    <ng-template #loader>
+        <app-loader></app-loader>
+    </ng-template>
+    
+</app-dashboard>

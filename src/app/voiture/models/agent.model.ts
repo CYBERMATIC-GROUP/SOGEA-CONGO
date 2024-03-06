@@ -1,0 +1,53 @@
+
+
+export class Agent {
+  IDagent!: number
+  Nom!: string
+  Prenom!: string
+  eMail!: string
+  Civilite!: number
+  TelFixe!: string
+  TelPortable!: string
+  Adresse!: string
+  DateNaissance!: string
+  LieuNaissance!: string
+  Nationalite!: number
+  MotDePasse!: string
+  login!: string
+  Photo!: string
+  DateCreation!: string
+  DateModification!: string
+  bCompteActif!: boolean
+  bDroitAjouterProduit!: boolean
+  bDateExpiration!: boolean
+  bDroitValiderCommande!: boolean
+  bAdminidtrateur!: boolean
+  bdroitAjouterAgent!: boolean
+  IDFonction_agent!: number
+  IDville!: number
+  bCotiseSecuriteSocial!: boolean
+  bPayeImpot!: boolean
+  SalaireBase!: number
+  NumCompteBancaire!: string
+  NumSecuriteSocial!: string
+  NombrePartsImpot!: number
+  IDCOMPTE!: number
+  IDCAISSE!: number
+  NombreEnfants!: number
+  SituationFamiliale!: number
+  Status!: number
+  bDroitRealiserControle!: boolean
+  bDroitEncaisser!: boolean
+  bDroitGererCaisse!: boolean
+  bAjouterTypeAutomobile!: boolean
+  bDroitAjouterAotomobile!: boolean
+  bDroitSupprimerEcriture!: boolean
+  bDroitGererProduitAssurence!: boolean
+  bEstAdministrateurProduitsAssurences!: boolean
+  bDroitGererAgents!: boolean
+  bDroitImprimerStatistiques!: boolean
+  bDroitGererProduitsControleTechniques!: boolean
+  bDroitImprimerVignette!: boolean
+  bDroitImprimerContrat!: boolean
+  bSuperUtilisateur!: boolean
+}

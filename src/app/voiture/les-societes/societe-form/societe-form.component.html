@@ -1,0 +1,196 @@
+<style>
+    div[modal-block="page"] {
+      background-color: white;
+      width: 100%;
+    }
+  </style>
+  
+  <div class="container-fluid p-0">
+    <div class="p-0 m-0" modal-block="page">
+      <form #categoryForm="ngForm">
+        
+          <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                    <a routerLink="/voiture/les-societes" title="Liste des societes"> <i class="fa fa-arrow-left"></i></a> 
+                    <span *ngIf="isUpdate">Mise a jour </span>
+                    <span *ngIf="!isUpdate">Nouvelle </span>
+                     societe
+                </h2>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-4 m-auto text-center">
+                       
+                            <img [src]="Logo ? Logo :'/assets/images/avatars/profile-image.png'" alt="" width="100px" id="preview" srcset="" class="mb-4">
+                            <input type="file" name="file" class="form-control" (change)="pickLogo($event)" accept="image/*">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6">
+                    <label for="">Nom Societe</label>
+                    <input
+                      [(ngModel)]="NomSociete"
+                      type="text"
+                      class="form-control"
+                      name="NomSociete"
+                      required
+                    />
+                  </div>
+                  <div class="col-xl-6 mt-2">
+                    <label for="">Code Societe</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="CodeSociete"
+                      required
+                      name="CodeSociete"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">
+                      <label for="">Mat Fiscale</label>
+                      <input
+                        [(ngModel)]="MatFiscale"
+                        type="text"
+                        class="form-control"
+                        name="MatFiscale"
+                        required
+                      />
+                    </div>
+                    <div class="col-xl-4 mt-2">
+                      <label for="">CP</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="CP"
+                        required
+                        name="CP"
+                      />
+                    </div>
+                    <div class="col-xl-4 mt-2">
+                        <label for="">Ville</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="Ville"
+                          required
+                          name="Ville"
+                        />
+                      </div>
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Pays</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="Pays"
+                          required
+                          name="Pays"
+                        />
+                      </div>
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Tel</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          [(ngModel)]="Tel"
+                          required
+                          name="Tel"
+                        />
+                      </div>
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Fax</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="Fax"
+                          required
+                          name="Fax"
+                        />
+                      </div>
+
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Adresse</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="Adresse"
+                          required
+                          name="Adresse"
+                        />
+                      </div>
+
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Email</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          [(ngModel)]="Email"
+                          required
+                          name="Email"
+                        />
+                      </div>
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Web</label>
+                        <input
+                          type="Web"
+                          class="form-control"
+                          [(ngModel)]="Web"
+                          required
+                          name="Web"
+                        />
+                      </div>
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Echeance</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="Echeance"
+                          required
+                          name="Echeance"
+                        />
+                      </div>
+
+                      <div class="col-xl-4 mt-2">
+                        <label for="">RemiseEnPourcentage (%)</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          [(ngModel)]="RemiseEnPourcentage"
+                          required
+                          name="RemiseEnPourcentage"
+                        />
+                      </div>
+
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Status</label>
+                        <select class="form-select" name="Status" [(ngModel)]="Status">
+                            <option value="1">Activer</option>
+                            <option value="2">Desactiver</option>
+                        </select>
+                      </div>
+
+                      <div class="col-xl-4 mt-2">
+                        <label for="">Departement</label>
+                        <select class="form-select" name="IDDEPARTEMENT" [(ngModel)]="IDDEPARTEMENT">
+                            <option *ngFor="let departement of departements" [value]="departement.IDDEPARTEMENT">{{departement.NomDepartement}}</option>
+                        </select>
+                      </div>
+
+
+                  </div>
+              </div>
+              <div class="card-footer">
+                <button
+                  (click)="isUpdate ? updateLesSocietes() : createLesSocietes()"
+                  class="btn btn-primary"
+                > Valider <i class="fa fa-add"></i>
+                </button>
+              </div>
+            </div>
+      </form>
+    </div>
+  </div>
+  

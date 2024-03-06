@@ -1,0 +1,140 @@
+<div class="container">
+  <li class="nav-item" style="list-style: none">
+    <a
+      class="nav-link text-primary"
+      style="cursor: pointer"
+      (click)="_location.back()"
+      ><i class="fa-solid fa-arrow-left"></i> Retour
+    </a>
+  </li>
+  <h1 class="card-title text-center">Liste des arrondissements</h1>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <label for="" class="text-center mx-1">Recherche</label>
+      <div class="d-flex align-items-center">
+        <i
+          style="position: absolute"
+          class="fa-solid fa-map-marked-alt p-3 text-success"
+        ></i>
+        <input
+          type="text"
+          (keyup)="applyFilter($event)"
+          placeholder="Recherchez par ici..."
+          class="form-control shadow text-start px-5 text-uppercase"
+        />
+      </div>
+    </div>
+    <div class="col-lg-4 mt-4">
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        (change)="onSelectionChanges($event)"
+      >
+        <option value="0">Tous les departements</option>
+        <option disabled>Filtrer par departements</option>
+        <option
+          *ngFor="let departement of DepartementList"
+          [value]="departement.IDDEPARTEMENT"
+        >
+          {{ departement.NomDepartement }}
+        </option>
+      </select>
+    </div>
+    <div class="col-lg-4">
+      <button
+        class="form-control col-lg-4 mt-4 bg-primary text-white"
+        style="cursor: pointer; float: right"
+        (click)="create()"
+      >
+        Ajouter un arrondissement
+      </button>
+    </div>
+  </div>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" *ngIf="!isLoading; else loader">
+      <!-- Position Column -->
+      <ng-container matColumnDef="NomArron">
+        <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+          Arrondissements
+        </th>
+        <td class="pointer" mat-cell *matCellDef="let element">
+          {{ element.NomArron }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Ordre">
+        <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+          Ordre
+        </th>
+        <td class="pointer" mat-cell *matCellDef="let element">
+          {{ element.Ordre }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="NomDepartement">
+        <th class="bg-color-primary" mat-header-cell *matHeaderCellDef>
+          Departements
+        </th>
+        <td class="pointer" mat-cell *matCellDef="let element">
+          {{ element.NomDepartement }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Actions">
+        <th
+          mat-header-cell
+          class="text-end"
+          style="padding-right: 65px"
+          *matHeaderCellDef
+        >
+          Actions
+        </th>
+
+        <td
+          mat-cell
+          class="text-end"
+          style="padding-right: 50px"
+          *matCellDef="let element"
+        >
+          <button
+            type="button"
+            (click)="view(element)"
+            class="btn text-lowercase py-0 px-1"
+          >
+            <i class="fa fa-eye text-black" aria-hidden="true"></i>
+          </button>
+          <button
+            type="button"
+            (click)="edit(element)"
+            class="btn text-lowercase py-0 px-1"
+          >
+            <i class="fa fa-pencil text-black" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn text-lowercase px-1 py-0"     (click)="delete(element)">
+            <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[20, 40, 60]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+
+  <ng-template #loader>
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <br />
+      <span>Chargement...</span>
+    </div>
+  </ng-template>
+</div>

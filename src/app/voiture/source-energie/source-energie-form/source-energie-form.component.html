@@ -1,0 +1,71 @@
+<li class="nav-item bg-primary text-left"  *ngIf="action != 'view'" style="list-style: none">
+  <a
+    class="nav-link text-white"
+    (click)="dialog.closeAll()"
+    style="cursor: pointer; padding-left: 10px;"
+    ><i class="fa-solid fa-arrow-left"></i> Annuler
+  </a>
+</li>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-left" style="width: 30em">
+          <h2 class="">
+            {{ action === "view" ? "Fiche de la source energitique " : "" }}
+            {{ action === "edit" ? "Modifier la energie" : "" }}
+            {{ action === "view" || action === "edit" ? SourceEnergie : "" }}
+            {{ !action ? "creer une energie" : "" }}
+          </h2>
+        </h3>
+        <form
+          #genreForm="ngForm"
+          (ngSubmit)="onSubmitForm(genreForm)"
+          class="g-3 needs-validation"
+        >
+          <div class="row">
+            <div class="col-lg-6">
+              <label for="validationCustom01" class="form-label"
+                >Code Sourse Energie</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="CodeSourseEnergie"
+                [(ngModel)]="CodeSourseEnergie"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-6">
+              <label for="validationCustom01" class="form-label"
+                >Source Energie</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="SourceEnergie"
+                [(ngModel)]="SourceEnergie"
+                required=""
+              />
+            </div>
+          </div>
+
+          <div class="mt-3 m-auto" *ngIf="action != 'view'">
+            <button type="submit" class="btn form-control btn-primary">
+              {{ action === "edit" ? "Modifier la source energie " : "Valider" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="fa-3x text-start mb-2 mt-2">
+    <span class="fs-5 mb-2 mt-2"></span> <br /><br />
+    <i class="fas text-primary spinner-grow"></i><br />
+  </div>
+</ng-template>

@@ -1,0 +1,55 @@
+<li class="nav-item bg-primary text-left"  *ngIf="action != 'view'" style="list-style: none">
+  <a
+    class="nav-link text-white"
+    (click)="dialog.closeAll()"
+    style="cursor: pointer; padding-left: 10px;"
+    ><i class="fa-solid fa-arrow-left"></i> Annuler
+  </a>
+</li>
+<div class="row">
+  <div class="" style="width: 42em">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-center" >
+          <h2 class="">
+            {{ action === "view" ? "Fiche  marque automobile " : "" }}
+            {{ action === "edit" ? "Modifier la marque automobile" : "" }}
+            {{ action === "view" || action === "edit" ? Marque : "" }}
+            {{ !action ? "Nouvelle Marque d'automobile" : "" }}
+          </h2>
+        </h3>
+        <form
+          #marqueAutomobileForm="ngForm"
+          (ngSubmit)="onSubmitForm(marqueAutomobileForm)"
+          class="g-3 needs-validation"
+        >
+          <div class="">
+            <label for="validationCustom01" class="form-label"
+              >Marque automobile</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="Marque"
+              [(ngModel)]="Marque"
+              required=""
+            />
+          </div>
+
+          <div class="mt-3" *ngIf="action != 'view'">
+            <button type="submit" [mat-dialog-close]="true" class="btn form-control btn-primary">
+              {{ action === "edit" ? "Modifier une marque " : "Valider" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="fa-3x text-start mb-2 mt-2">
+    <span class="fs-5 mb-2 mt-2"></span> <br /><br />
+    <i class="fas text-primary spinner-grow"></i><br />
+  </div>
+</ng-template>

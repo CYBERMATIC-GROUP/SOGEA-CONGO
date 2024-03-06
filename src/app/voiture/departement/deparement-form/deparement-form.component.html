@@ -1,0 +1,66 @@
+<style>
+    div[modal-block="alert"] {
+      background-color: white;
+      width: 500px;
+    }
+  </style>
+  
+  <div class="container-fluid p-0 bg-primary">
+    <li class="nav-item bg-primary text-left" style="list-style: none">
+      <a
+        class="nav-link text-white"
+        (click)="dialog.closeAll()"
+        style="cursor: pointer; padding-left: 10px;"
+        ><i class="fa-solid fa-arrow-left"></i> Annuler
+      </a>
+    </li>
+    <div class="p-0 m-0" modal-block="alert">
+      <form #categoryForm="ngForm">
+          <div class="card">
+              <div class="card-header">
+                <h2 class="card-title" *ngIf="dialogData.action == 'create'">
+                  Nouveau departement
+                </h2>
+                <h2 class="card-title" *ngIf="dialogData.action == 'update'">
+                  Mise a jour du departement
+                </h2>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <label for="">Code Departement</label>
+                    <input
+                      [(ngModel)]="CodeDepartement"
+                      type="text"
+                      class="form-control"
+                      name="CodeDepartement"
+                      required
+                    />
+                  </div>
+                  <div class="col-12 mt-2">
+                    <label for="">Nom Departement</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="NomDepartement"
+                      required
+                      name="NomDepartement"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button
+                  (click)="(dialogData.action == 'create' ? createDepartement() : updateDepartement())"
+                  class="btn btn-primary"
+                >
+                  Valider
+                  <i *ngIf="dialogData.action == 'update'" class="fa fa-edit"></i>
+                  <i *ngIf="dialogData.action == 'create'" class="fa fa-add"></i>
+                </button>
+              </div>
+            </div>
+      </form>
+    </div>
+  </div>
+  

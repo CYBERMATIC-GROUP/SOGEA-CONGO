@@ -1,0 +1,23 @@
+li>a{
+    text-decoration: none;
+}
+
+.mini-principal{
+    width: 77%;
+    margin-left: 22%;
+}
+
+.bloc-principal{
+    margin: 1em;
+}
+
+.pt-7{
+    padding-top: 5em;
+}
+
+.central-page{
+    @media (max-width: 1300px) {
+        width: 100%;
+        margin-left: 0;
+    }
+}

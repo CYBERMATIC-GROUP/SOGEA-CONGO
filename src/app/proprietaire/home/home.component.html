@@ -1,0 +1,123 @@
+<app-dashboard titlePage="Votre espace de gestion">
+  <div>
+    <div class="col-12 mb-5">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="info-box" [routerLink]="route.espaceProprietaire.mesVehicule">
+            <span class="info-box-icon bg-green">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFV0lEQVR4nO2X/U9bVRjHSRb3j+iU1wEt5aWFlXtLeS2lgLxHQKfL5rJkcfthA5QWedmy8WKIwjZgQMuWsCxTZ9wyzVQui/5gZmJhhhlcDAql9I1CC92WPuac29uWltLethYT+ySfNPf+cO7n+5yec+6NiYlWtKIVrd0qfq79IIdS9HFn5VrurALYI9dyKHkv9+crr8TsR9HywYgrPLkccfmq6ekDXEpuQgKpvd9DyvknPknGzENyyzwcdqf3IR2AkpvQeBENkPpjRxx++IPLrKSTWuacJLbOAeebS3SIR+2xEQ3AnZHXoQdzbo+wlk7EqCGhVQ0pt6/iAGmPOmojGoAzq7iA/z7Xb7GWTmhVQzyiTQ3J49PMgu4JSgSqqg5ultX1bUrrtZtl9eCFtM6LjdJaJ0uVzXDt7QHgnFcHLB3f9ivEOUgcvM8s5HvcWUU3l1LYHNfzAQXYLEXyjNhOuQ0JQ42LEoZqjLmY5kpzf8DScW4kdP3kWMiKVTd5NCPbgXT/wIakxoTEjp76OqidpPnUXTAXvgkrshrgUfJwbKmAgnAoRaffAObimjhzcRU8lb0X0k6yIHkH1vMroPzzljDIy5tiAi1TQWWdubASvqppC2knuVt1Dkx5Mjg7dDrkAJxZxULAAdbFFRdQ5waaBkPaSXqbBsBESmHoo2OshceWKLC+fA6jSxQzA3bfHc+vmEfCJnG5bV0s6zKKZPdNIhmcPHGLtbT7ojx+4iYYhRJ48G4DfPrhUdAIi0DPL4THMpnfAJaXNkCFfpl7PgMYRTIbmmqEkZRtG3KlGiMhBfEZirW0O6KzP4AhpxgWi8pAk1MA+sx80GWKYYVf4DcA6jySH12aCSAAIe0yEqU2JI0RStwoAcMRT4qx2A6yi1wIikAvKHTBLwRdeh7o0kWwkpUHgy3NQa0Dv/99Q05J055i2d5ien6BiyxEPg3uNt1xTIYYzvWfDGkhx/grPb9gYVe5rN3kXGIIDb8Q+s5MgezqX0AqzT5Y9wlxQwOCL78DLvVx8AF0mfl21DXrxE2wW7fAev2GQxBNvzsi0PFo1hBpJPR+oGIlTHphwgi+eBhCAIeY3WLFO4DdYsFyTriECw4iF6PhkiAZ0WARXudiUCc3p/N3HICY0gJ3tiO4AIycZVSFQ1hGlKBNzQVtqtBFCuIITTLNL0Q9ls8dM4R0cgvH9DiEcMocW93QCJ74DeAtl4NZPcyQTZPEIIDVRAHcqW7BAbI/04R0cguGloFUGoGc1NcGFcAl5pJzksAHjZMs0MS76H//Gg6Q1bcU0smdPvCnI4Cxp7qhkXKXr6pvnPEbAMu5iWHiMl3EIjLgrYHHQKoMIB7XwifHh+G04ls89byexZBO7tSLaB0YgVAa75HK9W5i0mBDzyFUa4F9A6zEZgDmDUS6i9cRPJpDPBBPrOAA6GH542tQPvQMB0hu/y2kkztJ8QSPS6j0q8SkyYZnA10rdduBBTiEBNNgGfEaA5fmVQYODBwbBPHEKj3dblsgfR0gKsPe4HHRbOhthGrN/zcAKrYLR6Q0NIVNWOWOHiNS6gL/BggmAKE0LIRTmPSAUOkX2AZgtfLJSYMdyU6pt2DrhR3/hiI8NWd1jGOl7yl1vr8BwlGMkPWFnX53f25nJUx6sHMcHSYiAVDn0cNVO2ZAzwIdBnWeHsca2QC7Cad3L+JDzfNcQFurc1ttU0PqxadO2d34lwP47mrO8HJAAQTDf3tIr+1gnwLo0AKEjEvPILl19wCJbWpI6/vDS3ifAuhYsrc0GbkA4RcmIxkgqFfeCI73vwhAsX5nj+B40YpWtGL+2/UPGOuqfMPkB7IAAAAASUVORK5CYII="
+              />
+            </span>
+            <div
+              class="info-box-content d-flex justify-content-start align-items-center"
+            >
+              <div>
+                <h2 class="mb-0 pt-3">Mes véhicules</h2>
+                <span class="text-secondary">Consulter mes véhicules</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div
+            class="info-box"
+            [routerLink]="'/' + route.espaceProprietaire.selectionSousription"
+          >
+            <span class="info-box-icon bg-aqua">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE5UlEQVR4nO2YW1MaZxzG+RrtRTwAikfA84Hg+YTgWWMSk1pBa2O1i5lMbKHmplf9EMlM0zRE29TatElT24s2+SQRFhDQaMfqRXw67+6+CwsLLE52JpnhP/PcOePvefb5v8u7Gk1+8pOf/LwzU7MTu2PeiZ2ad2Iw/xGDieg5L+PvRFFO1c8EPY2i6mkEVb/xqiT6lVfFkz1ev/Aq3+ZVth06NWyF11UxYHoe+y8VnIc2PssALkBXPpGCl4vgYZT9HJdhK3yslgFw0AngUuioCC0FT0pbDnyLA4fhpxAnVQz02obQNziMAccobMPjsI9MwDE2heHxaYxMXsbYpasYn57B5JXrmLo6i+lrH+PydSeuzM5jZm4B15yL+Gj+BmYXljC3uAznjRXMLzFYWF7F4spNfMrcwtLqbXx2cy1v4J16Ak7G+9Ll9kIU4/3XxXj+cq167Zpc5lxLSbst9LuU6DGvkh+Jgrx+CEJPtMkr8f+63J4XEgMSM56vFRtIu5Tb2ZdSFpxCC+A6og2WUyaOuVt3PnS5vbddjOeUM6H0SdC07+2ewcfirevuqzfQPmI5KeFxMp41YsDp9v6pzIBQk7uvVDTgC6DYF1BkYIH58gNhJw4VGUh+4aTU5HGGmgjd1m3yFSGiaWt9LAdd/JBX0UNlBsjQXdAomVyWUp8MLkDrHmUA/57Kr44Bg9KlFNOOg6dA++JpU/DCB35RqhgoVXgEimlvKEtbBP/OjwKi+7kY8Lxwuj1/KzOg8AhMl7YE/IE8eMH9XVz4dlednxIl501briYUmgPfxQUBnEoVA/pMaXPggZxqQtOWkyoGdJvs8XnT/uaLe9gfmcGRYxpHdqJLOBqcwqGNaBKHA5M47J/AYf84XveN43XvGK+eURx0E43goGsYB51EQ9jvGMJ+uwP77Xbst9kRsw4iarWdxiy29Jch3UZgvdjHnpxnKSMEnoNOACfQAwR6goem4D2jAvgIDrri4Bx0hyMFPGa1IXbRhphlANHWPnUuQ/JpT2ROuyshbQreRsAJ9CAPLYL3I9rSh2hzX/4u8X7c5pyM96WT8f7z3hpw5fIK12g0WZeyLWEpU7rdz3U72tyLSFMPIo09iDR0I1Lfhb26Tl61HdiraUfY3KaOAfkjUGYpLQNJS9mLaFMvD93YjUhDF/YoOIUWwMMmK8LGiyoZ4MAdOJtfAT5xv3W9mVtBqNqCUJVF4Q64PUfEALneKfl7mvaZ63OVDCwjVNmKYEWLwidAvgqQ6xzjWVPy9/wLJ16TaKu0JhFaE9rt5JqYSUXiNaFpE+hQRQuCFc0IljcjWNak0MCq1y58FTglJrI9CbkXDtftJtrthKUk0BJwK8JGK0LVFLxVTJtCE7GGRrClDcpfZOSTRrrPHclHbNq05ZbSLF3KEAGnaVe2SME5aB6cLalHQF+X25uYPAnyVYDuhGgg6ZKh9AjkamJMrUmQQgvgNG22pAGsvh4BXR0CuloEtDXq/JRQegSKaVdlT5vVE+g6BLS1CBTXwF9shr/IrI6BvfrO3JYyU9p6mrYAXmSGv9AkSh0DtR1JaVuT0k5aSkMieH28JgRaWyMLrqqBsLHtWHYpK+RqIqRdkibtolTouIzq3AeC1Zb1UHXrSbYjUJK2LnvaEhWYTnYLTV+pYiA/+clPfjTnmf8Bcl51aVN5jyQAAAAASUVORK5CYII="
+              />
+            </span>
+            <div
+              class="info-box-content d-flex justify-content-start align-items-center"
+            >
+              <div>
+                <h2 class="mb-0 pt-3">Mes opérations finacières</h2>
+                <span class="text-primary">Transactions/historiques...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div
+            class="info-box"
+            [routerLink]="
+              '/' +
+              route.espaceProprietaire.baseRoute +
+              '/' +
+              route.espaceProprietaire.selectionSousription
+            "
+          >
+            <span class="info-box-icon bg-primary">
+              <img
+                src="data:image/png;base64,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"
+              />
+            </span>
+            <div
+              class="info-box-content d-flex justify-content-start align-items-center"
+            >
+              <div>
+                <h2 class="mb-0 pt-3">Versement journalier</h2>
+                <span class="text-primary">Faire un versemenent</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-box" routerLink="/impression">
+            <span class="info-box-icon bg-secondary-cust">
+              <img src="../../assets/logo/Planning.png" alt="" />
+            </span>
+            <div
+              class="info-box-content d-flex justify-content-start align-items-center"
+            >
+              <div>
+                <h2 class="mb-0 pt-3"></h2>
+                <span style="color: #7b4bce"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="" id="cart">
+      <main class="w-100">
+        <section class="summary">
+          <div class="items">3 items</div>
+          <div class="total">$415.00</div>
+        </section>
+
+        <section class="actions">
+          <button>Checkout</button>
+        </section>
+
+        <section class="cart">
+          <ul>
+            <li class="item text-light">
+              <h3 class="name">Paiement effectué</h3>
+              <p class="price">260 000XAF</p>
+            </li>
+            <li class="item text-light">
+              <h3 class="name">Reste à payer</h3>
+              <p class="price">260 000XAF</p>
+            </li>
+            <li class="item text-light">
+              <h3 class="name">Retard</h3>
+              <p class="price" title="(nice)">10 000XAF</p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="promo bg-primary">
+          <div class="text-light text-start">ApperÇu</div>
+        </section>
+
+        <section class="help">❓ Besoin d'aide</section>
+      </main>
+    </div>
+  </div>
+</app-dashboard>

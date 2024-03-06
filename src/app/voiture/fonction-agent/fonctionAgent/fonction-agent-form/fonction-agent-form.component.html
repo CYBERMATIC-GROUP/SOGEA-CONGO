@@ -1,0 +1,59 @@
+
+<div class="row">
+  <li class="nav-item bg-primary text-left"  *ngIf="action != 'view'" style="list-style: none">
+    <a
+      class="nav-link text-white"
+      (click)="dialog.closeAll()"
+      style="cursor: pointer; padding-left: 10px;"
+      ><i class="fa-solid fa-arrow-left"></i> Annuler
+    </a>
+  </li>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title text-center" style="width: 26em">
+            <h2 class="">
+              {{ action === "view" ? "Fiche de la fonction " : "" }}
+              {{ action === "edit" ? "Modifier la fonction" : "" }}
+              {{ action === "view" || action === "edit" ? Libele : "" }}
+              {{ !action ? "creer une fonction" : "" }}
+            </h2>
+          </h3>
+          <form
+            #fonctionAgentForm="ngForm"
+            (ngSubmit)="onSubmitForm(fonctionAgentForm)"
+            class=" g-3 needs-validation"
+          >
+            <div class=" m-auto">
+              <label for="validationCustom01" class="form-label">Libele fonction</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="GenreVoiture"
+                [(ngModel)]="Libele"
+                required=""
+              />
+            </div>
+  
+            <div class="mt-3  m-auto" *ngIf="action != 'view'">
+              <button
+                type="submit"
+                class="btn form-control btn-primary"
+              >
+                {{ action === "edit" ? "Modifier la fonction " : "Valider" }}
+  
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loading>
+    <div class="fa-3x text-start mb-2 mt-2">
+      <span class="fs-5 mb-2 mt-2"></span> <br /><br />
+      <i class="fas text-primary spinner-grow"></i><br />
+    </div>
+  </ng-template>
+  

@@ -1,0 +1,111 @@
+<app-dashboard>
+  <div class="container-fluid">
+    <div class="main">
+      <div class="row">
+        <div class="col-md-8 p-2">
+          <div class="rounded bg-white p-2">
+            <apx-chart
+              [series]="chartOptions2.series"
+              [chart]="chartOptions2.chart"
+              [xaxis]="chartOptions2.xaxis"
+              [stroke]="chartOptions2.stroke"
+              [tooltip]="chartOptions2.tooltip"
+              [dataLabels]="chartOptions2.dataLabels"
+              [title]="chartOptions2.title"
+            ></apx-chart>
+          </div>
+        </div>
+  
+        <div class="col-md-4 p-2">
+          <div class="rounded bg-white p-2">
+            <apx-chart
+              [series]="chartOptions3.series"
+              [chart]="chartOptions3.chart"
+              [plotOptions]="chartOptions3.plotOptions"
+              [labels]="chartOptions3.labels"
+              [title]="chartOptions3.title"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <div class="col-md-8 p-2">
+          <div class="rounded bg-white p-2">
+            <apx-chart
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [xaxis]="chartOptions.xaxis"
+              [title]="chartOptions.title"
+            ></apx-chart>
+          </div>
+        </div>
+        <div class="col-md-4 p-2">
+          <div class="rounded bg-white p-2">
+            <apx-chart
+              [series]="chartOptions4.series"
+              [chart]="chartOptions4.chart"
+              [labels]="chartOptions4.labels"
+              [fill]="chartOptions4.fill"
+              [stroke]="chartOptions4.stroke"
+              [responsive]="chartOptions4.responsive"
+              [title]="chartOptions4.title"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <div class="col-12 p-2">
+          <div class="bg-white rounded p-2">
+            <button class="btn btn-primary m-1"
+              (click)="updateOptions('1m')"
+              [class.active]="activeOptionButton == '1m'"
+            >
+              1M
+            </button>
+            <button class="btn btn-primary m-1"
+              (click)="updateOptions('6m')"
+              [class.active]="activeOptionButton == '6m'"
+            >
+              6M
+            </button>
+            <button class="btn btn-primary m-1"
+              (click)="updateOptions('1y')"
+              [class.active]="activeOptionButton == '1y'"
+            >
+              1Y
+            </button>
+            <button class="btn btn-primary m-1"
+              (click)="updateOptions('1yd')"
+              [class.active]="activeOptionButton == '1yd'"
+            >
+              1YD
+            </button>
+            <button class="btn btn-primary m-1"
+              (click)="updateOptions('all')"
+              [class.active]="activeOptionButton == 'all'"
+            >
+              All
+            </button>
+            <apx-chart
+              #chart
+              [series]="chartOptions5.series"
+              [chart]="chartOptions5.chart"
+              [colors]="chartOptions5.colors"
+              [yaxis]="chartOptions5.yaxis"
+              [dataLabels]="chartOptions5.dataLabels"
+              [markers]="chartOptions5.markers"
+              [stroke]="chartOptions5.stroke"
+              [grid]="chartOptions5.grid"
+              [xaxis]="chartOptions5.xaxis"
+              [tooltip]="chartOptions5.tooltip"
+              [annotations]="chartOptions5.annotations"
+              [title]="chartOptions5.title"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-dashboard>

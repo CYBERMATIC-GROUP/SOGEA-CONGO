@@ -1,0 +1,188 @@
+<div class="container bg-light">
+<form  [formGroup]="filterForm" class="bg-light p-2" *ngIf="suggestGenreList && departements && suggestMarqueAutoList && suggestProprietaireList && suggestSourceEnergie && suggestTypeAutoMobile && categoryList && suggestSocieteList; else loading">
+    <div class="d-flex justify-content-between">
+        <h2>Filtre avancé</h2>
+        <button type="button" mat-dialog-close  class="btn-close" style="color: red" aria-label="Close"></button>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label"
+          >Immatriculation*</label>
+        <input
+          type="text"
+          class="form-control hauteur text-uppercase"
+          formControlName="Immatriculation"
+        />
+      </div>
+
+      <div class="col-md-4">
+        <label for="validationCustom01" class="form-label">Numero serie*</label>
+        <input
+          formControlName="NumeroSerie"
+          type="text"
+          class="form-control hauteur hauteur text-uppercase"
+        />
+      </div>
+
+      <div class="col-md-4">
+        <label for="validationCustom02" *ngIf="filterForm.controls['AnneeConstruction'].valid" class="form-label">Année de mise en service*</label>
+        <label for="validationCustom02" *ngIf="filterForm.controls['AnneeConstruction'].invalid" class="form-label text-danger">Année de mise en service invalide*</label>
+        <input
+          type="number"
+          class="form-control hauteur"
+          min="1900" max="2099"
+          formControlName="AnneeConstruction"
+        />
+      </div>
+
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Marque*</label>
+
+        <div class="d-flex align-items-center">
+          <input
+            type="text"
+            [ngClass]="{ 'px-5': suggestMarqueAutoList.length < 1}"
+
+            class="form-control hauteur text-uppercase"
+            formControlName="Marque" (blur)="onBlurMarqueAuto($event)" (input)="onInputMarqueAuto($event)"  placeholder="Marque automobile" [matAutocomplete]="marque"
+          />
+          <mat-autocomplete #marque>
+            <mat-option *ngFor="let marque of suggestMarqueAutoList" [value]="marque.Marque">{{ marque.Marque }}</mat-option>
+          </mat-autocomplete>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Type automobile*</label>
+
+        <div class="d-flex align-items-center">
+
+            <input  type="text" 
+              [ngClass]="{ 'px-5': suggestTypeAutoMobile.length < 1}"
+              class="form-control shadow text-start " 
+              formControlName="TypeAutomobile" (blur)="onBlurTypeAuto($event)" (input)="onInputTypeAuto($event)"  placeholder="Type automobile" [matAutocomplete]="typeAuto"
+            >
+          <mat-autocomplete #typeAuto>
+            <mat-option *ngFor="let type of suggestTypeAutoMobile" [value]="type.NomType">{{ type.NomType }}</mat-option>
+          </mat-autocomplete>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <label for="" class="">Source energies*</label>
+        <div class="d-flex align-items-center">
+          <select
+            type="text"
+            class="form-control hauteur"
+            formControlName="IDSourceEnergie"
+
+            aria-label=".form-select-sm example"
+          >
+            <option disabled selected>Energie</option>
+            <option [value]="m.IDSourceEnergie"  *ngFor="let m of suggestSourceEnergie">{{ m.SourceEnergie }}</option>
+          </select>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label for="validationCustom02" class="form-label mb-0">Genre*</label>
+
+        <div class="d-flex align-items-center">
+          <input
+            type="text"
+            [ngClass]="{ 'px-5': suggestGenreList.length < 1}"
+
+            class="form-control hauteur text-uppercase"
+            formControlName="Genre" (blur)="onBlurGenre($event)" (input)="onInputGenre($event)"  placeholder="Genre véhicule" [matAutocomplete]="genre"
+          />
+          <mat-autocomplete #genre>
+            <mat-option *ngFor="let genre of suggestGenreList" [value]="genre.GenreVoiture">{{ genre.GenreVoiture }}</mat-option>
+          </mat-autocomplete>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label for="validationCustom02" class="form-label mb-0">Proprietaire </label>
+        <div class="d-flex align-items-center">
+
+
+          <input
+            type="text"
+            [ngClass]="{ 'px-5': suggestProprietaireList.length < 1}"
+
+            class="form-control hauteur text-uppercase"
+            formControlName="Proprietaire" (blur)="onBlurProprietaire($event)" (input)="onInputProprietaire($event)"  placeholder="Proprietaire" [matAutocomplete]="proprioElt"
+          />
+          <mat-autocomplete #proprioElt>
+            <mat-option *ngFor="let proprio of suggestProprietaireList" [value]=" proprio.Nom + ' ' + proprio.Prenom ">{{ proprio.Nom + ' ' + proprio.Prenom }}</mat-option>
+          </mat-autocomplete>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+      <label for="" class="">Categorie</label>
+      <div class="d-flex align-items-center">
+        <select
+          type="text"
+          class="form-control hauteur"
+          formControlName="IDCategories"
+
+          aria-label=".form-select-sm example"
+        >
+          <option disabled selected>category</option>
+          <option [value]="c.IDCategories" *ngFor="let c of categoryList">{{ c.Categorie_Vehicule }}</option>
+        </select>
+      </div>
+  </div>
+
+    <div class="col-md-4">
+        <label for="validationCustom02" *ngIf="filterForm.controls['lesSocietesName'].invalid" class="form-label text-danger mb-0">Aucune société avec ce nom trouvée </label>
+        <label for="validationCustom02" *ngIf="filterForm.controls['lesSocietesName'].valid" class="form-label mb-0">Société </label>
+
+        <div class="d-flex align-items-center mt-0">
+          <input
+            type="text"
+
+            [ngClass]="{ 'px-5': suggestSocieteList.length < 1}"
+            class="form-control hauteur text-uppercase"
+            formControlName="lesSocietesName" (blur)="onBlurLesSocietes($event)" (input)="onInputSociete($event)"  placeholder="Société" [matAutocomplete]="societe"
+          />
+          <mat-autocomplete #societe>
+            <mat-option *ngFor="let societe of suggestSocieteList" [value]="societe.NomSociete">{{ societe.NomSociete }}</mat-option>
+          </mat-autocomplete>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <label for="" class="">Departement*</label>
+        <div class="d-flex align-items-center">
+          <select
+            type="text"
+            class="form-control hauteur"
+            formControlName="IDDEPARTEMENT"
+
+            aria-label=".form-select-sm example"
+          >
+            <option  disabled selected>Societe</option>
+            <option [value]="m.IDDEPARTEMENT"  *ngFor="let m of departements">{{ m.NomDepartement }}</option>
+          </select>
+        </div>
+    </div>
+
+    <div class="p-2">
+        <button type="submit" [mat-dialog-close]="true" (click)="onSubmitForm()" class="w-100 m-auto text-danger border fs-2 p-1" color="accent">Filtrer</button>
+    </div>
+
+    </div>
+</form>
+
+<ng-template #loading>
+    <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+      <div class="fa-3x text-center">
+          <span class="fs-5 mb-1 mt-2">Chargement...</span> <br><br>
+          <i class="fas text-primary spinner-grow"></i><br />
+      </div>
+    </div>
+</ng-template>
+</div>

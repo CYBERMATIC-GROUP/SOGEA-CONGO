@@ -1,0 +1,783 @@
+<li class="nav-item  rounded  p-2 " style="width: 100px;list-style: none;">
+  <a class="nav-link text-primary" style="cursor: pointer;" (click)="_location.back()"><i class="fa-solid fa-arrow-left"></i> Retour </a>
+</li>
+<div class="row bg-white">
+  <h3 class="card-title text-center border bg-primary text-white">
+    <h2 class="">
+      {{ action === "view" ? "Fiche de l'utilisateur " : "" }}
+      {{ action === "edit" ? "Modifier l'utilisateur " : "" }}
+      {{ action === "view" || action === "edit" ? Nom : "" }}
+      {{ !action ? "Fiche de l'utilisateur" : "" }}
+    </h2>
+  </h3>
+  <form
+    #genreForm="ngForm"
+    (ngSubmit)="onSubmitForm(genreForm)"
+    class="w-100 needs-validation"
+  >
+    <mat-tab-group class="  ">
+      <mat-tab label="Informations Générales de l'agent" class="">
+        <div class="row mb-5">
+
+          <div class="col-lg-6 border text-center">
+            <div class="col-lg-12 mb-3">
+              <img [src]="image" class="w-50 m-auto" alt="" />
+            </div>
+
+            <div class="col-lg-6 m-auto">
+              <label for="validationCustom01" class="form-label"
+                >photo de l'agent</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="file"
+                class="form-control hauteur hauteur"
+                name="Photo"
+                accept="image/*"
+                [(ngModel)]="Photo"
+                (change)="onFileSelected($event)"
+              />
+            </div>
+          </div>
+          
+          <div class="col-lg-6 border">
+            <div class="col-lg-12 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Nom de l'agent *</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control text-uppercase"
+                name="Nom"
+                [(ngModel)]="Nom"
+                required=""
+              />
+            </div>
+            <div class="col-lg-12 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Prénom de l'agent *</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control text-uppercase hauteur hauteur"
+                name="Prenom"
+                [(ngModel)]="Prenom"
+                required=""
+              />
+            </div>
+            <div class="col-lg-12 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Mail de l'agent *</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="email"
+                class="form-control hauteur hauteur"
+                name="eMail"
+                [(ngModel)]="eMail"
+                required=""
+              />
+            </div>
+            <div class="col-lg-12 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Civilité de l'agent</label
+              >
+
+              <select
+                name="Civilite"
+                [(ngModel)]="Civilite"
+                class="form-select"
+                aria-label="Default select example"
+              >
+                <option disabled>choisir votre civilité</option>
+                <option value="1">Homme</option>
+                <option value="2">Femme</option>
+              </select>
+            </div>
+            <div class="col-lg-12">
+              <label for="validationCustom01" class="form-label"
+                >Telephone Fixe de l'agent</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="number"
+                class="form-control hauteur hauteur"
+                name="TelFixe"
+                [(ngModel)]="TelFixe"
+                required=""
+              />
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Telephone Portable de l'agent *</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="number"
+              class="form-control hauteur hauteur"
+              name="TelPortable"
+              [(ngModel)]="TelPortable"
+              required=""
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Adresse de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="Adresse"
+              [(ngModel)]="Adresse"
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Date de naissance de l'agent *</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="date"
+              class="form-control hauteur hauteur"
+              name="DateNaissance"
+              [(ngModel)]="DateNaissance"
+              required=""
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Lieu de naissance de l'agent *</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="LieuNaissance"
+              [(ngModel)]="LieuNaissance"
+              required=""
+            />
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Fonction de l'agent</label
+            >
+
+            <select
+              class="form-select"
+              name="IDFonction_agent"
+              [(ngModel)]="IDFonction_agent"
+              aria-label="Default select example"
+            >
+              <option disabled>selectionner une fonction</option>
+              <option
+                *ngFor="let fonction of FonctionAgentList"
+                [value]="fonction.Libele"
+              >
+                {{ fonction.Libele }}
+              </option>
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >ville de l'agent</label
+            >
+
+            <select
+              class="form-select"
+              name="IDville"
+              [(ngModel)]="IDville"
+              aria-label="Default select example"
+            >
+              <option disabled>selectionner une ville</option>
+              <option *ngFor="let ville of VilleList" [value]="ville.IDville">
+                {{ ville.Libele }}
+              </option>
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Nationalité de l'agent *</label
+            >
+
+            <select
+              class="form-select"
+              name="Nationalite"
+              [(ngModel)]="Nationalite"
+              aria-label="Default select example"
+            >
+              <option disabled>selectionner une nationalité</option>
+              <option
+                *ngFor="let nationalite of NationaliteList"
+                [value]="nationalite.IDNationalite"
+              >
+                {{ nationalite.LibNationalite }}
+              </option>
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Salaire de base de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="SalaireBase"
+              [(ngModel)]="SalaireBase"
+            />
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >NumCompteBancaire de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="number"
+              class="form-control hauteur hauteur"
+              name="NumCompteBancaire"
+              [(ngModel)]="NumCompteBancaire"
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >NumSecuriteSocial de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="number"
+              class="form-control hauteur hauteur"
+              name="NumSecuriteSocial "
+              [(ngModel)]="NumSecuriteSocial"
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >NombrePartsImpot de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="number"
+              class="form-control hauteur hauteur"
+              name="NombrePartsImpot"
+              [(ngModel)]="NombrePartsImpot"
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Compte de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="IDCOMPTE"
+              [(ngModel)]="IDCOMPTE"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-3" *ngIf="action == 'view'">
+            <label for="validationCustom01" class="form-label"
+              >CAISSE de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="IDCAISSE"
+              [(ngModel)]="IDCAISSE"
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Nombre enfants de l'agent *</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="number"
+              class="form-control hauteur hauteur"
+              name="NombreEnfants"
+              [(ngModel)]="NombreEnfants"
+              required=""
+            />
+          </div>
+          <div class="col-lg-3">
+            <label for="validationCustom01" class="form-label"
+              >Situation Familiale de l'agent *</label
+            >
+
+            <select
+              class="form-select form-control"
+              name="SituationFamiliale"
+              [(ngModel)]="SituationFamiliale"
+              aria-label="Default select example"
+              required=""
+            >
+              <option disabled>Open this select menu</option>
+              <option value="1">Divorcé(e)</option>
+              <option value="2">Marié(e)</option>
+              <option value="3">Celibataire</option>
+              <option value="3">Veuf(ve)</option>
+            </select>
+          </div>
+          <div class="col-lg-3" *ngIf="action == 'view'">
+            <label for="validationCustom01" class="form-label"
+              >Status de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="Status"
+              [(ngModel)]="Status"
+            />
+          </div>
+        </div>
+
+       
+
+        <div class="row mt-3 mb-3">
+          <div class="col-lg-3" *ngIf="action == 'view'">
+            <label for="validationCustom01" class="form-label"
+              >Date de modification de l'agent</label
+            >
+            <input
+              type="text"
+              class="form-control hauteur hauteur"
+              name="DateModification"
+              [(ngModel)]="DateModification"
+            />
+          </div>
+
+          <div class="col-lg-3" *ngIf="action == 'view'">
+            <label for="validationCustom01" class="form-label"
+              >Date d'enregistrement de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="DateCreation"
+              [(ngModel)]="DateCreation"
+            />
+          </div>
+
+          <div class="col-lg-3" *ngIf="action == 'view'">
+            <label for="validationCustom01" class="form-label"
+              >login de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="login"
+              [(ngModel)]="login"
+            />
+          </div>
+
+          <div class="col-lg-3" *ngIf="action == 'view'">
+            <label for="validationCustom01" class="form-label"
+              >Mot De Passe de l'agent</label
+            >
+            <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="MotDePasse"
+              [(ngModel)]="MotDePasse"
+            />
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Droits d'utilisations">
+        <div class="row mt-3">
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitRealiserControle"
+                [(ngModel)]="bDroitRealiserControle"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Réaliser Controle
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitEncaisser"
+                [(ngModel)]="bDroitEncaisser"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Encaisser
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitGererCaisse"
+                [(ngModel)]="bDroitGererCaisse"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Gerer Caisse
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bAjouterTypeAutomobile"
+                [(ngModel)]="bAjouterTypeAutomobile"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Ajouter TypeAutomobile
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitAjouterAotomobile"
+                [(ngModel)]="bDroitAjouterAotomobile"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Ajouter Aotomobile
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitSupprimerEcriture"
+                [(ngModel)]="bDroitSupprimerEcriture"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Supprimer Ecriture
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitGererProduitAssurence"
+                [(ngModel)]="bDroitGererProduitAssurence"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Gerer Produit Assurence
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bEstAdministrateurProduitsAssurences"
+                [(ngModel)]="bEstAdministrateurProduitsAssurences"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Admin Produits Assurences
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitGererAgents"
+                [(ngModel)]="bDroitGererAgents"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Gerer Agents
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitImprimerStatistiques"
+                [(ngModel)]="bDroitImprimerStatistiques"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Imprimer Statistiques
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitGererProduitsControleTechniques"
+                [(ngModel)]="bDroitGererProduitsControleTechniques"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Produits Controle Techniques
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitImprimerVignette"
+                [(ngModel)]="bDroitImprimerVignette"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Imprimer Vignette
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDateExpiration"
+                [(ngModel)]="bDateExpiration"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Date Expiration
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitValiderCommande"
+                [(ngModel)]="bDroitValiderCommande"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droi tValider Commande
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bAdminidtrateur"
+                [(ngModel)]="bAdminidtrateur"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Adminidtrateur
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bdroitAjouterAgent"
+                [(ngModel)]="bdroitAjouterAgent"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Ajouter Agent
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitImprimerContrat"
+                [(ngModel)]="bDroitImprimerContrat"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Imprimer Contrat
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="bSuperUtilisateur"
+                [(ngModel)]="bSuperUtilisateur"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Super Utilisateur
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bCompteActif"
+                [(ngModel)]="bCompteActif"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Compte Actif
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-check">
+              <input
+                [readonly]="action == 'view'"
+                class="form-check-input"
+                type="checkbox"
+                name="bDroitAjouterProduit"
+                [(ngModel)]="bDroitAjouterProduit"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Droit Ajouter Produit
+              </label>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="row pt-2"  *ngIf="action == 'create'">
+      <li style="list-style: none;">NB : les champs en (<span class="text-danger">*</span>) sont obligatoires</li>
+    </div>
+    <div class="mt-2 mb-3" *ngIf="action != 'view'">
+      <button type="submit" class="btn form-control btn-primary">
+        {{ action === "edit" ? "Mettre à jour " : "creer un utilisateur" }}
+      </button>
+    </div>
+  </form>
+
+</div>
+<ng-template #loading>
+  <div class="fa-3x text-start mb-2 mt-2">
+    <span class="fs-5 mb-2 mt-2"></span> <br /><br />
+    <i class="fas text-primary spinner-grow"></i><br />
+  </div>
+</ng-template>
+
+<!-- <div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body text-left">
+   
+        <form
+          #genreForm="ngForm"
+          (ngSubmit)="onSubmitForm(genreForm)"
+          class="g-3 needs-validation"
+        >
+         
+
+
+        
+
+      
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ -->

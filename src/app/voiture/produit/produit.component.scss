@@ -1,0 +1,80 @@
+$primary-color: #789aa7;
+$secondary-color: #8cbec6;
+
+tr, th, td{
+    background: white;
+    border-color: $primary-color;
+    color: rgb(27, 26, 26);
+}
+  
+  .md-dialog {
+    opacity: 0;
+  }
+  
+  
+ 
+t-elevation-z8 tr, .mat-elevation-z8 mat-header-cell {
+    height: 2em;
+  }
+  .mat-elevation-z8 th, .mat-elevation-z8 mat-header-cell {
+    background-color: $primary-color;
+    color: white;
+  }
+  h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+  }
+  
+  //lignes
+  tr:nth-child(even) {
+      background-color: #f2f2f2;
+  }
+
+  tr:hover{
+    background-color: $secondary-color;
+  }
+
+  mat-paginator{
+    background-color: $primary-color    ;
+  }
+  table {
+    width: 100%;
+    // border: 1px solid #5b5b5b64;
+  }
+
+.mat-elevation-z8{
+    background-color: white;
+    width: 100% !important;
+    padding: 0px !important;
+
+    th, mat-header-cell{
+        color: white;
+        margin: 0px !important;
+
+
+    }
+    tr, mat-header-cell{
+        height: 2em;
+
+    } td{
+      height: 30px;
+  }
+
+}
+
+
+.table-striped tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+.color{
+    color: #7888fc;
+}
+
+.bg-color{
+  background-color: #FAD7DD;
+  cursor: pointer;
+}
+
+
+  

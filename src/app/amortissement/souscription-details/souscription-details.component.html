@@ -1,0 +1,212 @@
+<div class="container">
+    <h1 class="my-2">Gestion souscription </h1>
+    <div class="row" *ngIf="souscritpion; else loader">
+
+        <div class="col-md-6">
+            <div class="row g-2 border">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Immatriculation</div>
+                    <div class="col-8">
+                      : {{ souscritpion.Immatriculation }}
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Proprietaire</div>
+                    <div class="col-8">
+                      : {{ souscritpion.Proprietaire }}
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Date de souscription</div>
+                    <div class="col-8">: {{ souscritpion.DateSouscription | date }}</div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                      <div class="col-4">Montant du prêt</div>
+                      <div class="col-8">: {{ globalService.formatPrix(souscritpion.MontantTotal) }}</div>
+                  </div>
+              </div>
+
+              <div class="col-12">
+                <div class="row">
+                    <div class="col-4">Taux d'intérêt</div>
+                    <div class="col-8">: {{ souscritpion.TauxInteret }} %</div>
+                </div>
+              </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Intérêt</div>
+                    <div class="col-8">: {{ globalService.formatPrix(souscritpion.CoutPret) }}</div>
+                  </div>
+                </div>
+
+
+                <div class="col-12">
+                  <div class="row">
+                      <div class="col-4">Montant total</div>
+                      <div class="col-8">: {{ globalService.formatPrix(souscritpion.CapitalInteret) }}</div>
+                  </div>
+                </div>
+    
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4">Durée du prêt</div>
+                    <div class="col-8">: {{ souscritpion.DureePret }}</div>
+                  </div>
+                </div>
+    
+    
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row g-2 border">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">Mensualité</div>
+                        <div class="col-8">: {{ globalService.formatPrix(souscritpion.Mensualite) }}</div>
+                    </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">Duree en année</div>
+                        <div class="col-8">: {{ souscritpion.DureeEnAnnee }}</div>
+                    </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">Commision courtier/jour</div>
+                        <div class="col-8">: {{ globalService.formatPrix(souscritpion.Commiss_Courtier_Gest_Jour) }}</div>
+                    </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">Commision courtier/an</div>
+                        <div class="col-8">: {{ globalService.formatPrix(souscritpion.Commiss_Courtier_Anneulle) }}</div>
+                    </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">Date début</div>
+                        <div class="col-8">: {{ souscritpion.DateDebut | date }}</div>
+                    </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">Date fin</div>
+                        <div class="col-8">: {{ souscritpion.DateFin | date }}</div>
+                    </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">QCM</div>
+                        <div class="col-8">: {{ globalService.formatPrix(souscritpion.QCM) }}</div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-2 border">
+        <div class="col-12">
+            <div class="row p-2">
+                <div class="col-4 bg-color-primary p-2">Reste </div>
+                <div class="col-8 bg-color-primary p-2">: <strong>{{ globalService.formatPrix(souscritpion.Reste_Du) }}</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div fxLayout="row mt-4">
+        <button mat-raised-button routerLink="/liste-souscription" color="primary" class=" col-md-4 ">liste des souscription</button>
+        <button mat-raised-button (click)="newVersement()" color="primary" class=" col-md-4 ">Anticiper l'échéance</button>
+        <button mat-raised-button [disabled]="printLoading" (click)="imprimer()" color="primary" class=" col-md-4 "> 
+          <span class="text-dark" *ngIf="printLoading">Chargement du pdf...</span>
+          {{ printLoading ? '' : 'Imprimer' }}
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col m-auto">
+            <h2 class="my-4">Résumé des écheances</h2>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" *ngIf="!echeancesIsLoading; else loader">
+          
+              <!-- Position Column -->
+              <ng-container matColumnDef="Numero">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Numero </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+                    {{ element.Numero }}
+                 </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="SoldeInitial">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Solde initial </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+                    {{ element.SoldeInitial }}
+                 </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Mensualite">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Mensualité </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+                    {{ globalService.formatPrix(element.Mensualite) }}
+                 </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Versement">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Versement </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+                    {{ globalService.formatPrix(element.Versement) }}
+                 </td>
+              </ng-container>
+
+              <ng-container matColumnDef="CapitalRembourse">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Capital remboursé </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+                    {{ globalService.formatPrix(element.CapitalRembourse ) }}
+                 </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Interet">
+                <th class="bg-color-primary" mat-header-cell *matHeaderCellDef> Intérêt </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="pointer" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+                    {{ globalService.formatPrix(element.Interet ) }}
+                 </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator  [pageSizeOptions]="[20, 5, 10]"
+                showFirstLastButtons
+                aria-label="Select page of periodic elements"
+              >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+</div>
+
+<ng-template #loader>
+    <div class="text-center">
+      <br />
+      <span>Chargement en cours ...</span>
+    </div>
+  </ng-template>

@@ -1,0 +1,296 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="row">
+  <li class="nav-item" style="list-style: none;">
+    <a class="nav-link text-primary " style="cursor: pointer;" (click)="_location.back()"><i class="fa-solid fa-arrow-left"></i> Retour </a>
+  </li>
+  <div class="col-12" style="width: 80em">
+    <div class="card shadow">
+      <div class="card-header">
+        <h3 class="card-title text-center">
+          <h2 class="bg-light p-1">
+            {{ action === "view" ? "Fiche de plan comptable " : "" }}
+            {{ action === "edit" ? "Modifier le plan comptable " : "" }}
+            {{ action === "view" || action === "edit" ? LibelleCompte : "" }}
+            {{ !action ? "creer un plan comptable" : "" }}
+          </h2>
+        </h3>
+      </div>
+      <div class="card-body text-left">
+        <form
+          #compteForm="ngForm"
+          (ngSubmit)="onSubmitForm(compteForm)"
+          class="g-3 needs-validation"
+        >
+          <div class="row mb-5">
+          
+            <div class="col-lg-4 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Libelle Compte</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="LibelleCompte"
+                [(ngModel)]="LibelleCompte"
+                required=""
+              />
+            </div> 
+
+          
+
+         
+            <div class="col-lg-4 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Compte De Contre Partie</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="CompteDeContrePartie"
+                [(ngModel)]="CompteDeContrePartie"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Code Compte</label
+              >
+
+              <input
+              [readonly]="action == 'view'"
+              type="text"
+              class="form-control hauteur hauteur"
+              name="CodeCompte"
+              [(ngModel)]="CodeCompte"
+              required=""
+            />
+            </div>
+
+            <div class="col-lg-4 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Compte De Cumul</label
+              >
+
+              <input
+                class="form-control form-select"
+                name="CompteDeCumul"
+                [(ngModel)]="CompteDeCumul"
+                list="datalistOptions"
+                id="exampleDataList"
+                
+              />
+              <datalist id="datalistOptions">
+                <option disabled>selectionner un compte cumul</option>
+                <option
+                  *ngFor="let compte of CompteList"
+                  [value]=""
+                >
+                  {{ compte.LibelleCompte }}
+                </option>
+              </datalist>
+
+          
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label">CreePar</label>
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="CreePar"
+                [(ngModel)]="CreePar"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label"
+                >Personne Associee</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="PersonneAssociee"
+                [(ngModel)]="PersonneAssociee"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label"
+                >Date d'enregistrement</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="DateCreation"
+                [value]="DateCreation | date : 'dd/MM/yyyy'"
+              />
+            </div>
+            <div class="col-lg-4 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Liasse Debit</label
+              >
+
+              <select
+                class="form-select"
+                name="LiasseDebit"
+                [(ngModel)]="LiasseDebit"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner une liasse debit</option>
+                <option
+                  *ngFor="let Liasse of LiasseList"
+                  [value]="Liasse.IDLIASSE"
+                >
+                  {{ Liasse.LibelleLiasse }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-4 mb-3">
+              <label for="validationCustom01" class="form-label"
+                >Liasse Credit</label
+              >
+
+              <select
+                class="form-select"
+                name="LiasseCredit"
+                [(ngModel)]="LiasseCredit"
+                aria-label="Default select example"
+              >
+                <option disabled>selectionner une liasse crédit</option>
+                <option
+                  *ngFor="let Liasse of LiasseList"
+                  [value]="Liasse.IDLIASSE"
+                >
+                  {{ Liasse.LibelleLiasse }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label">Sens DC</label>
+
+              <select
+                [disabled]="action == 'view'"
+                class="form-select"
+                [(ngModel)]="SensDC"
+                name="SensDC"
+                required=""
+              >
+                <option [value]="CST_SENS_DC_Credit">Crédit</option>
+                <option [value]="CST_SENS_DC_Debit">Débit</option>
+                <option [value]="CST_SENS_DC_Indetermine">Indeterminé</option>
+              </select>
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label"
+                >Type Personne Associee</label
+              >
+              <select
+                [disabled]="action == 'view'"
+                class="form-select hauteur hauteur"
+                name="TypePersonneAssociee"
+                [(ngModel)]="TypePersonneAssociee"
+              >
+                <option value="4">Produit</option>
+                <option value="2">Taxi</option>
+                <option value="1">Agence</option>
+                <option value="3">Assureur</option>
+              </select>
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label"
+                >Produit Associe</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="ProduitAssocie"
+                [(ngModel)]="ProduitAssocie"
+                required=""
+              />
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label"
+                >Date Mo dification</label
+              >
+              <input
+                [readonly]="action == 'view'"
+                type="text"
+                class="form-control hauteur hauteur"
+                name="DateModification"
+                [value]="DateModification | date : 'dd/MM/yyyy'"
+              />
+            </div>
+
+            <div class="col-lg-4 mb-3" *ngIf="action == 'view'">
+              <label for="validationCustom01" class="form-label">nClasse</label>
+              <input
+                [readonly]="action == 'view'"
+                type="number"
+                class="form-control hauteur hauteur"
+                name="nClasse"
+                [(ngModel)]="nClasse"
+                required=""
+              />
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-lg-4 mb-3">
+                <label for="validationCustom01" class="form-label"
+                  >Est Un Chapitre ?</label
+                >
+                &nbsp;
+                <input
+                  [readonly]="action == 'view'"
+                  type="checkbox"
+                  class="hauteur hauteur"
+                  name="EstUnChapitre"
+                  [(ngModel)]="EstUnChapitre"
+                  required=""
+                />
+              </div>
+
+              <div class="col-lg-4">
+                <label for="validationCustom01" class="form-label"
+                  >Compte De Banque</label
+                >
+                &nbsp;
+                <input
+                  [readonly]="action == 'view'"
+                  type="checkbox"
+                  name="CompteDeBanque"
+                  [(ngModel)]="CompteDeBanque"
+                  required=""
+                />
+              </div>
+            </div>
+
+            <div class="col-12" *ngIf="action != 'view'">
+              <button type="submit" class="btn mt-3 form-control btn-primary">
+                {{ action === "edit" ? "Modifier ce compte " : "Valider" }}
+              </button>
+            </div>
+          </div>
+          <ng-template #loading>
+            <div class="fa-3x text-start mb-2 mt-2">
+              <span class="fs-5 mb-2 mt-2"></span> <br /><br />
+              <i class="fas text-primary spinner-grow"></i><br />
+            </div>
+          </ng-template>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
